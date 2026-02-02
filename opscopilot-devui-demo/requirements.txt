@@ -1,0 +1,6 @@
+agent-framework --pre
+agent-framework-devui --pre
+python-dotenv
+nest_asyncio
+fastapi
+uvicorn
