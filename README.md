@@ -1,38 +1,64 @@
-# Agent Framework Demo
+# Agent Framework Demos
 
-A demo notebook showcasing Microsoft Agent Framework with Azure OpenAI.
+דמואים של Microsoft Agent Framework עם Azure OpenAI.
 
-## Setup
+## 📁 Project Structure
 
-### 1. Install Dependencies
+```
+agent-framework/
+├── agent_framework.ipynb          # Notebook demo - בסיסי
+├── opscopilot-devui-demo/         # OpsCopilot DevUI demo - מתקדם
+│   ├── opscopilot/
+│   │   ├── models.py              # Pydantic models
+│   │   ├── mock_data.py           # Mock incidents
+│   │   ├── tools.py               # AI functions + approval
+│   │   ├── middleware.py          # Logging middleware
+│   │   ├── memory.py              # Context providers
+│   │   ├── agents.py              # Agent definitions
+│   │   └── workflow.py            # Workflow orchestration
+│   ├── run_devui.py               # DevUI launcher
+│   └── README.md                  # Demo documentation
+└── README.md                      # This file
+```
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+```bash
+# Azure CLI login
+az login
+
+# Set environment variables (or create .env file)
+export AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com/
+export AZURE_OPENAI_CHAT_DEPLOYMENT_NAME=gpt-4o-mini
+```
+
+### Option 1: Notebook Demo (Basic)
 
 ```bash
 pip install agent-framework --pre python-dotenv
 ```
 
-### 2. Configure Environment Variables
+Open `agent_framework.ipynb` and run the cells.
 
-Create a `.env` file in the root directory with the following variables:
-
-```env
-# Azure OpenAI Configuration
-AZURE_OPENAI_CHAT_DEPLOYMENT_NAME=gpt-4o-mini
-AZURE_OPENAI_ENDPOINT=https://your-resource-name.openai.azure.com/
-AZURE_OPENAI_API_KEY=your-api-key-here
-API_VERSION=2025-01-01-preview
-```
-
-### 3. Azure CLI Authentication
-
-This demo uses Azure CLI credentials. Make sure you're logged in:
+### Option 2: OpsCopilot DevUI Demo (Advanced)
 
 ```bash
-az login
+cd opscopilot-devui-demo
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+python run_devui.py
 ```
 
-## Usage
+Open http://localhost:8282
 
-Open `agent_framework.ipynb` and run the cells to interact with the agent.
+## 📖 Demos
+
+| Demo | Description | Features |
+|------|-------------|----------|
+| `agent_framework.ipynb` | Basic notebook demo | Simple agent interactions |
+| `opscopilot-devui-demo` | Full incident triage workflow | Agents, Workflow, Tools, Human-in-the-loop, Middleware, Memory |
 
 ## License
 
