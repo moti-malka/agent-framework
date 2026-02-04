@@ -1,10 +1,13 @@
-# 📧 Support Email Copilot — Microsoft Agent Framework
+# 📧 Microsoft Agent Framework — Learning Examples
 
-A complete learning journey to build an AI-powered support email system using the **Microsoft Agent Framework**. This notebook progressively teaches you all major framework capabilities through a practical use case.
+A comprehensive collection of learning resources for building AI-powered systems using the **Microsoft Agent Framework**. This repository includes both an interactive Jupyter notebook tutorial and standalone Python examples demonstrating advanced orchestration patterns.
 
-## 🎯 What You'll Build
+## 🎯 What's Included
 
-By completing this notebook, you'll have built a **Support Email Copilot** that:
+This repository contains two main learning resources:
+
+### 1. **Support Email Copilot** (Jupyter Notebook)
+An interactive tutorial that progressively teaches framework capabilities:
 
 - ✅ **Classifies** incoming emails (Spam / Not Spam / Uncertain)
 - ✅ **Looks up** customer SLA and ticket status via function tools
@@ -15,23 +18,16 @@ By completing this notebook, you'll have built a **Support Email Copilot** that:
 - ✅ **Uses multiple reviewers** for quality control (security, tone, accuracy)
 - ✅ **Logs** every operation for observability
 
-## 📚 Table of Contents
+### 2. **Startup Idea Analyzer** (Standalone Python Script)
+A Magentic orchestration demo featuring collaborative AI agents:
 
-| # | Section | What You'll Learn |
-|---|---------|------------------|
-| **0** | Shared Setup | Environment, models, sample data |
-| **1** | Basic Agent | Create and run your first agent |
-| **2** | Streaming | Real-time token streaming |
-| **3** | Multi-Turn Conversations | Thread-based memory |
-| **4** | Function Tools | Add custom capabilities |
-| **5** | Human-in-the-Loop | Approval workflows |
-| **6** | Middleware | Logging & observability |
-| **7** | Memory | Persistent user context |
-| **8** | Sequential Workflows | Classify → Draft → Review |
-| **9** | Branching Logic | Spam vs. NotSpam vs. Uncertain |
-| **10** | Fan-Out/Fan-In | Parallel processing |
-| **11** | Multi-Agent Group Chat | Team collaboration |
-| **12** | Capstone Demo | End-to-end system |
+- 🔍 **Market Researcher** - Pessimistic analyst focused on risks
+- 💰 **Financial Analyst** - Optimistic view on revenue potential
+- ⚙️ **Tech Advisor** - Skeptical technical feasibility assessor
+- 🎯 **Magentic Manager** - Coordinates the team and balances perspectives
+- 📄 **Live Logging** - Real-time Markdown discussion logs
+- ⚡ **Streaming Output** - See agent discussions as they happen
+- 🔄 **Human-in-the-Loop** - Optional plan review and approval
 
 ## 🚀 Quick Start
 
@@ -51,25 +47,47 @@ cd agent-framework
 
 # 2. Create virtual environment
 python3.10 -m venv .venv
-source .venv/bin/activate
+source .venv/bin/activate  # macOS/Linux
+# or .venv\Scripts\activate  # Windows
 
 # 3. Install dependencies
-pip install agent-framework --pre python-dotenv nest_asyncio
+pip install -r requirements.txt
 
 # 4. Configure environment
-# Create a .env file with:
+# Create a .env file with your Azure OpenAI configuration:
 AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com/
 AZURE_OPENAI_CHAT_DEPLOYMENT_NAME=gpt-4o-mini
+AZURE_OPENAI_API_KEY=your-api-key  # Optional if using Azure CLI authentication
+API_VERSION=2025-01-01-preview  # Optional, defaults to this value
 
-# 5. Login to Azure
+# 5. Login to Azure (for CLI-based authentication)
 az login
+```
 
-# 6. Open the notebook
+### Running the Examples
+
+**Option 1: Jupyter Notebook Tutorial**
+```bash
+# Open the notebook
 jupyter notebook agent_framework.ipynb
-# Or open in VS Code
+# Or open in VS Code with Jupyter extension
+```
+
+**Option 2: Standalone Magentic Demo**
+```bash
+# Run the startup analyzer
+python magentic_example.py
+
+# Follow the interactive prompts to:
+# - Choose streaming or human-in-the-loop mode
+# - Select a pre-defined startup idea or enter your own
+# - Watch agents collaborate in real-time
+# - Review the generated discussion log in discussions/ folder
 ```
 
 ## 🏗️ Framework Features Demonstrated
+
+### Jupyter Notebook (`agent_framework.ipynb`)
 
 | Feature | Section | Description |
 |---------|---------|-------------|
@@ -86,15 +104,79 @@ jupyter notebook agent_framework.ipynb
 | **ConcurrentBuilder** | 11 | Parallel multi-agent processing |
 | **MagenticBuilder** | 11 | Manager-orchestrated agent teams |
 
+### Python Script (`magentic_example.py`)
+
+| Feature | Description |
+|---------|-------------|
+| **MagenticBuilder** | Dynamic team coordination with manager agent |
+| **Specialized Agents** | Role-based agents with distinct personalities |
+| **Streaming Events** | Real-time agent updates via `AgentRunUpdateEvent` |
+| **Progress Tracking** | `MagenticProgressLedger` for workflow state |
+| **Plan Review** | Human-in-the-loop approval with `MagenticPlanReviewRequest` |
+| **Discussion Logging** | Custom middleware for Markdown conversation logs |
+| **Agent Middleware** | Custom logging hooks for observability |
+| **Azure Authentication** | Both API key and Azure CLI auth support |
+
 ## 📁 Project Structure
 
 ```
 agent-framework/
-├── agent_framework.ipynb    # Main tutorial notebook (12 sections)
-├── .env                     # Azure OpenAI configuration
-├── .venv/                   # Python virtual environment
-└── README.md                # This file
+├── agent_framework.ipynb      # Interactive tutorial notebook (12 sections)
+├── magentic_example.py        # Standalone Magentic orchestration demo
+├── requirements.txt           # Python dependencies
+├── .env                       # Azure OpenAI configuration (create this)
+├── .venv/                     # Python virtual environment
+├── images/                    # Architecture and workflow diagrams
+│   ├── agent-components.png
+│   ├── concurrent-workflow.png
+│   ├── group-chat.png
+│   ├── magentic-workflow.png
+│   ├── sequential-workflow.png
+│   ├── threads-and-memory.png
+│   └── workflow-example.png
+├── discussions/               # Generated by magentic_example.py (Markdown logs)
+└── README.md                  # This file
 ```
+
+## 📝 Environment Variables
+
+Create a `.env` file in the project root with the following variables:
+
+```bash
+# Required: Azure OpenAI Configuration
+AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com/
+AZURE_OPENAI_CHAT_DEPLOYMENT_NAME=gpt-4o-mini
+
+# Optional: API Key (if not using Azure CLI authentication)
+AZURE_OPENAI_API_KEY=your-api-key
+
+# Optional: API Version (defaults to 2025-01-01-preview)
+API_VERSION=2025-01-01-preview
+```
+
+**Authentication Options:**
+1. **Azure CLI** (recommended): Run `az login` before starting
+2. **API Key**: Set `AZURE_OPENAI_API_KEY` in `.env`
+
+## 📚 Jupyter Notebook Contents
+
+The `agent_framework.ipynb` tutorial is organized into 12 progressive sections:
+
+| # | Section | What You'll Learn |
+|---|---------|------------------|
+| **0** | Shared Setup | Environment, models, sample data |
+| **1** | Basic Agent | Create and run your first agent |
+| **2** | Streaming | Real-time token streaming |
+| **3** | Multi-Turn Conversations | Thread-based memory |
+| **4** | Function Tools | Add custom capabilities |
+| **5** | Human-in-the-Loop | Approval workflows |
+| **6** | Middleware | Logging & observability |
+| **7** | Memory | Persistent user context |
+| **8** | Sequential Workflows | Classify → Draft → Review |
+| **9** | Branching Logic | Spam vs. NotSpam vs. Uncertain |
+| **10** | Fan-Out/Fan-In | Parallel processing |
+| **11** | Multi-Agent Group Chat | Team collaboration |
+| **12** | Capstone Demo | End-to-end system |
 
 ## 📖 Learn More
 
