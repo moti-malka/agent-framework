@@ -125,14 +125,25 @@ agent-framework/
 ├── magentic_example.py        # Standalone Magentic orchestration demo
 ├── requirements.txt           # Python dependencies
 ├── .env                       # Azure OpenAI configuration (create this)
-├── .venv/                     # Python virtual environment
+├── .venv/                     # Python virtual environment (created after setup)
+├── .gitignore                 # Git ignore rules
+├── .gitattributes             # Git attributes configuration
+├── .github/                   # GitHub configuration
+│   ├── agents/
+│   │   └── readme-updater.agent.md
+│   └── workflows/
+│       ├── readme-updater.lock.yml
+│       └── readme-updater.md
 ├── images/                    # Architecture and workflow diagrams
 │   ├── agent-components.png
 │   ├── concurrent-workflow.png
 │   ├── group-chat.png
+│   ├── maf.png
 │   ├── magentic-workflow.png
+│   ├── main.png
 │   ├── sequential-workflow.png
 │   ├── threads-and-memory.png
+│   ├── what-is-agent.png
 │   └── workflow-example.png
 ├── discussions/               # Created by magentic_example.py at runtime (Markdown logs)
 └── README.md                  # This file
