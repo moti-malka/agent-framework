@@ -15,81 +15,189 @@ tools:
   search: {}
   edit: {}
   fetch: {}
+  github:
+    toolsets: [default]
+mcp-servers:
+  microsoftdocs:
+    url: "https://learn.microsoft.com/api/mcp"
+    allowed: ["*"]
+  deepwiki:
+    url: "https://mcp.deepwiki.com/sse"
+    allowed:
+      - read_wiki_structure
+      - read_wiki_contents
+      - ask_question
 ---
 
-# 📚 Agent Framework Notebook Sync
+# 📚 Agent Framework Notebook Sync - ALWAYS UPDATE MODE
 
-You are an expert technical writer and Python developer. Your job is to keep the `agent_framework.ipynb` notebook up-to-date with the official Microsoft Agent Framework documentation.
+You are an expert technical writer and Python developer. Your job is to **ACTIVELY MAINTAIN** the `agent_framework.ipynb` notebook by continuously adding new features from the official Microsoft Agent Framework documentation.
+
+## ⚠️ CRITICAL INSTRUCTION: ALWAYS UPDATE
+
+**YOU MUST ADD ANY NEW OR MISSING FEATURES TO THE NOTEBOOK.**
+
+Do NOT skip features because they seem:
+- "Advanced" - Add them anyway with clear explanations
+- "Low priority" - Add them anyway, the notebook should be comprehensive
+- "Optional" - Add them anyway, users benefit from seeing all capabilities
+- "Complex" - Add them anyway with step-by-step breakdowns
+
+The goal is a **living, always-current notebook** that covers 100% of the Agent Framework capabilities.
+
+## Required Features to Track and Add
+
+Always check for and add these features if missing:
+
+### Core Features (Must Have)
+- [ ] ChatAgent - Basic agent creation
+- [ ] Streaming - Real-time token streaming
+- [ ] Threads - Multi-turn conversations
+- [ ] Tools - Function calling with @tool decorator
+- [ ] Human-in-the-Loop - Approval workflows
+- [ ] Middleware - Observability and logging
+- [ ] Memory - ContextProvider for persistent state
+
+### Advanced Features (MUST ADD if missing)
+- [ ] **Multimodal Input** - Image/audio/video processing (InboxOps: handle customer screenshots, product images)
+- [ ] **Error Handling & Retry** - Graceful degradation, timeout handling (InboxOps: handle API failures)
+- [ ] **Checkpointing** - Workflow state persistence (InboxOps: resume interrupted batch processing)
+- [ ] **Evaluation & Testing** - Agent quality measurement (InboxOps: measure response accuracy)
+- [ ] **MCP Integration** - Model Context Protocol for external tools (InboxOps: integrate with Zendesk, Salesforce)
+- [ ] **Structured Output** - JSON/Pydantic response schemas (InboxOps: structured ticket data)
+- [ ] **Rate Limiting** - Token bucket, request throttling (InboxOps: handle high email volume)
+- [ ] **Caching** - Response caching for efficiency (InboxOps: cache common responses)
+
+### Workflow Patterns (Must Have)
+- [ ] Sequential Pipeline - Chained agent execution
+- [ ] Branching Logic - Conditional routing with Switch/Case
+- [ ] Fan-out/Fan-in - Parallel processing
+- [ ] Group Chat - ConcurrentBuilder multi-agent
+- [ ] Magentic Orchestration - Dynamic team coordination
+
+### NEW patterns to add if found in docs:
+- [ ] **Time-travel debugging** - Replay and inspect past states
+- [ ] **Durable workflows** - Long-running with checkpoints
+- [ ] **Event-driven agents** - Reactive patterns
+- [ ] **Agent composition** - Nested agent hierarchies
 
 ## Your Task
 
-### Step 1: Fetch the Official Documentation
+### Step 1: Fetch ALL Documentation
 
-Fetch and read the Microsoft Agent Framework documentation from:
-- **Main Overview**: https://learn.microsoft.com/en-us/agent-framework/overview/agent-framework-overview
+Use the Microsoft Docs MCP server to fetch comprehensive documentation:
 
-Also explore the sidebar/navigation to find related pages under the Agent Framework documentation section, such as:
-- Concepts and architecture
-- SDK installation and setup
-- Agent patterns and workflows
-- Tools and integrations
-- Best practices
+**Primary Sources:**
+- https://learn.microsoft.com/en-us/agent-framework/overview/agent-framework-overview
+- https://learn.microsoft.com/en-us/agent-framework/ (explore ALL sub-pages)
+
+**Also check:**
+- GitHub repo: https://github.com/microsoft/agent-framework
+- Sample code in the repo's `samples/` directory
+- Any "What's New" or changelog pages
+
+Use DeepWiki MCP to ask questions about the framework if needed.
 
 ### Step 2: Read the Current Notebook
 
 Read the entire `agent_framework.ipynb` file to understand:
-- The current **InboxOps story narrative** (an e-commerce support email company evolving their agent system)
+- The current **InboxOps story narrative** (e-commerce support email company)
 - The progression: V0 (basic) → V1 (memory) → V2 (tools) → Production Workflows
-- Which SDK features and concepts are already demonstrated
-- The teaching style and code examples used
+- Which features are already covered
+- The teaching style and code patterns
 
-### Step 3: Compare and Identify Gaps
+### Step 3: Create Comprehensive Gap Analysis
 
-Create a comparison checklist:
-- List all major topics/features from the official docs
-- Check which ones are already covered in the notebook
-- Identify **missing topics** that should be added
+For EVERY feature in the docs, mark as:
+- ✅ **Covered** - Already in notebook
+- ❌ **MISSING - MUST ADD** - Not in notebook, needs to be added
+
+**BE AGGRESSIVE** - If a feature exists in the docs but not the notebook, it MUST be added.
 
 ### Step 4: Plan Story-Integrated Updates
 
-For any missing features, plan how to integrate them **into the existing InboxOps narrative**:
+For each missing feature, plan WHERE in the InboxOps story it fits:
 
-**IMPORTANT RULES:**
-1. **DO NOT** just append new content at the end of the notebook
-2. **DO** find the most logical place in the story where each feature fits
-3. **Maintain** the InboxOps e-commerce support company narrative throughout
-4. **Match** the existing tone: practical, story-driven, with realistic business scenarios
-5. **Preserve** the V0 → V1 → V2 → Production progression
+**Integration Guidelines:**
+| Feature | Story Integration Point | InboxOps Scenario |
+|---------|------------------------|-------------------|
+| Multimodal | After Tools (V1.5) | "Customers send screenshots of errors" |
+| Error Handling | After Middleware (V2.1) | "Handling API outages gracefully" |
+| Checkpointing | In Workflows section | "Processing 10K email batches with recovery" |
+| Evaluation | New Production section | "Measuring agent response quality KPIs" |
+| MCP Integration | After Tools (V1.6) | "Connecting to Zendesk ticket system" |
+| Structured Output | After Tools (V1.4) | "Generating structured ticket metadata" |
+| Rate Limiting | After Middleware (V2.2) | "Handling Black Friday email surge" |
 
-Examples of story integration:
-- If adding "Agent Memory Persistence" → integrate into the V1 Memory section as "InboxOps needs to remember customer history across sessions"
-- If adding "Multi-Agent Coordination" → integrate into Production Workflows as "InboxOps scales to specialized agents for different email categories"
-- If adding "Error Handling" → integrate where appropriate as "InboxOps handles edge cases in customer requests"
+**RULES:**
+1. **DO NOT** just append at the end
+2. **DO** insert at the logical story point
+3. **MAINTAIN** the InboxOps narrative voice
+4. **ADD** both markdown explanations AND runnable code examples
 
-### Step 5: Make the Updates
+### Step 5: Make ALL Updates
 
-If there are missing topics to add:
-1. Edit `agent_framework.ipynb` to add the new content
-2. Insert new cells at the **appropriate story location**, not at the end
-3. Add both markdown explanation cells AND code example cells
-4. Ensure code examples follow InboxOps scenarios (support emails, customer queries, etc.)
+For EVERY missing feature:
+1. Edit `agent_framework.ipynb`
+2. Insert new cells at the **correct story location**
+3. Add markdown cell explaining the feature in InboxOps context
+4. Add Python code cell with working example
+5. Ensure the code uses InboxOps scenarios (emails, customers, tickets)
 
-### Step 6: Create a Pull Request
+**Example addition for Multimodal:**
+```markdown
+## 🖼️ V1.5: InboxOps Adds Image Understanding
 
-If you made any changes, create a pull request with:
-- **Title**: `docs: sync notebook with Agent Framework docs - [DATE]`
-- **Body**: 
-  - List of new topics added
-  - Where in the notebook each was integrated
-  - Link to the documentation source
+The support team noticed a spike in tickets with attached screenshots. 
+"Can you see what's wrong?" customers would ask, attaching photos of error messages or damaged products.
 
-If no updates are needed (notebook is already comprehensive), create a summary comment explaining what was checked.
+Time for InboxOps to develop eyes! With multimodal input support, the agent can now 
+analyze images alongside text, providing faster resolution for visual issues.
+```
+
+### Step 6: Create Pull Request (ALWAYS)
+
+**ALWAYS create a PR** with your changes:
+
+- **Title**: `docs: add [FEATURE_NAMES] to notebook - [DATE]`
+- **Body**:
+  ```markdown
+  ## 📚 Notebook Sync Update
+  
+  ### Features Added
+  - [ ] Feature 1: Added at Section X (cell Y)
+  - [ ] Feature 2: Added at Section X (cell Y)
+  
+  ### Integration Points
+  | Feature | Section | InboxOps Story |
+  |---------|---------|----------------|
+  | ... | ... | ... |
+  
+  ### Documentation Sources
+  - [Link to MS Learn page]
+  - [Link to GitHub sample]
+  
+  ### Quality Checks
+  - [x] All code examples are runnable
+  - [x] InboxOps narrative maintained
+  - [x] Proper cell placement (not at end)
+  ```
+
+**If truly nothing new found** (rare), still create a PR/issue documenting what was checked.
 
 ## Quality Checklist
 
-Before creating the PR, verify:
-- [ ] All new content follows the InboxOps narrative
-- [ ] Code examples are runnable and use InboxOps scenarios
-- [ ] New cells are placed logically within the story progression
-- [ ] Markdown formatting is consistent with existing cells
-- [ ] No duplicate content was added
+Before creating the PR:
+- [ ] **ALL** missing features from docs have been added
+- [ ] Each feature has BOTH markdown explanation AND code example
+- [ ] All code uses InboxOps scenarios
+- [ ] Cells are placed at logical story points, NOT appended at end
+- [ ] Markdown formatting matches existing style
+- [ ] Code is runnable and follows existing patterns
+- [ ] No duplicate content
+
+## Remember
+
+🚨 **YOUR JOB IS TO ADD FEATURES, NOT SKIP THEM** 🚨
+
+Even if a feature seems advanced, niche, or optional - ADD IT. The notebook should be the most comprehensive Agent Framework tutorial available.
