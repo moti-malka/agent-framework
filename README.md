@@ -121,18 +121,30 @@ python magentic_example.py
 
 ```
 agent-framework/
-├── agent_framework.ipynb      # Interactive tutorial notebook (12 sections)
+├── agent_framework.ipynb      # Interactive tutorial notebook (14 sections)
 ├── magentic_example.py        # Standalone Magentic orchestration demo
 ├── requirements.txt           # Python dependencies
 ├── .env                       # Azure OpenAI configuration (create this)
 ├── .venv/                     # Python virtual environment
+├── .github/                   # GitHub Actions workflows and custom agents
+│   ├── agents/                # Custom agent definitions
+│   │   └── readme-updater.agent.md
+│   └── workflows/             # Automated workflows
+│       ├── readme-updater.lock.yml
+│       ├── readme-updater.md
+│       ├── notebook-sync.lock.yml
+│       └── notebook-sync.md
 ├── images/                    # Architecture and workflow diagrams
 │   ├── agent-components.png
 │   ├── concurrent-workflow.png
+│   ├── customer_image.png
 │   ├── group-chat.png
+│   ├── maf.png
 │   ├── magentic-workflow.png
+│   ├── main.png
 │   ├── sequential-workflow.png
 │   ├── threads-and-memory.png
+│   ├── what-is-agent.png
 │   └── workflow-example.png
 ├── discussions/               # Created by magentic_example.py at runtime (Markdown logs)
 └── README.md                  # This file
@@ -160,7 +172,7 @@ API_VERSION=2025-01-01-preview
 
 ## 📚 Jupyter Notebook Contents
 
-The `agent_framework.ipynb` tutorial is organized into 12 progressive sections:
+The `agent_framework.ipynb` tutorial is organized into 14 progressive sections:
 
 | # | Section | What You'll Learn |
 |---|---------|------------------|
@@ -175,8 +187,9 @@ The `agent_framework.ipynb` tutorial is organized into 12 progressive sections:
 | **8** | Sequential Workflows | Classify → Draft → Review |
 | **9** | Branching Logic | Spam vs. NotSpam vs. Uncertain |
 | **10** | Fan-Out/Fan-In | Parallel processing |
-| **11** | Multi-Agent Group Chat | Team collaboration |
-| **12** | Capstone Demo | End-to-end system |
+| **11** | Group Chat | Concurrent multi-agent collaboration |
+| **12** | Magentic Orchestration | Dynamic planning and coordination |
+| **13** | Evaluation & Testing | Quality metrics and validation |
 
 ## 📖 Learn More
 
