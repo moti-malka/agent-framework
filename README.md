@@ -93,16 +93,26 @@ python magentic_example.py
 |---------|---------|-------------|
 | **ChatAgent** | 1-3 | Core agent with instructions, streaming, threads |
 | **Function Tools** | 4 | `@tool` decorator for custom capabilities |
+| **Multimodal Input** | 4.1 | Handle images and screenshots |
+| **Structured Output** | 4.2 | Pydantic models for validated JSON responses |
+| **MCP Integration** | 4.3 | Connect external tools via MCP protocol |
 | **Approval Mode** | 5 | `approval_mode="always_require"` for HITL |
 | **Middleware** | 6 | Agent and function invocation hooks |
+| **Error Handling** | 6.2 | Retry logic, circuit breakers, resilience patterns |
+| **Rate Limiting** | 6.3 | Token bucket pattern for traffic control |
+| **Caching** | 6.4 | Cache decorator for repeated queries |
 | **ContextProvider** | 7 | Memory with `invoking`/`invoked` lifecycle |
 | **WorkflowBuilder** | 8-10 | Sequential, branching, fan-out patterns |
 | **AgentExecutor** | 8-10 | Wrap agents for workflow orchestration |
 | **Switch-Case** | 9 | Multi-way routing with `Case`/`Default` |
+| **Checkpointing** | 9.1 | Resume workflows from failure points |
 | **Multi-Selection** | 10 | Dynamic fan-out to parallel paths |
 | **Fan-In** | 10 | Aggregate results from parallel execution |
 | **ConcurrentBuilder** | 11 | Parallel multi-agent processing |
-| **MagenticBuilder** | 11 | Manager-orchestrated agent teams |
+| **MagenticBuilder** | 12 | Manager-orchestrated agent teams |
+| **Evaluation** | 13 | Quality metrics and automated testing |
+| **Durable Agents** | 14 | Production deployment with Azure Functions |
+| **AG-UI** | 15 | Web interface integration |
 
 ### Python Script (`magentic_example.py`)
 
@@ -121,21 +131,35 @@ python magentic_example.py
 
 ```
 agent-framework/
-├── agent_framework.ipynb      # Interactive tutorial notebook (12 sections)
-├── magentic_example.py        # Standalone Magentic orchestration demo
-├── requirements.txt           # Python dependencies
-├── .env                       # Azure OpenAI configuration (create this)
-├── .venv/                     # Python virtual environment
-├── images/                    # Architecture and workflow diagrams
+├── .github/                   # GitHub automation
+│   ├── agents/               # Custom agent configurations
+│   │   └── readme-updater.agent.md
+│   └── workflows/            # GitHub Actions workflows
+│       ├── notebook-sync.lock.yml      # Auto-sync notebook changes
+│       ├── notebook-sync.md
+│       ├── readme-updater.lock.yml     # Auto-update README
+│       └── readme-updater.md
+├── .gitattributes            # Git attribute rules for workflows
+├── .gitignore                # Python, IDE, and environment ignores
+├── agent_framework.ipynb     # Interactive tutorial (15+ sections)
+├── magentic_example.py       # Standalone Magentic orchestration demo
+├── requirements.txt          # Python dependencies
+├── .env                      # Azure OpenAI configuration (create this)
+├── .venv/                    # Python virtual environment (ignored)
+├── images/                   # Architecture and workflow diagrams
 │   ├── agent-components.png
 │   ├── concurrent-workflow.png
+│   ├── customer_image.png
 │   ├── group-chat.png
+│   ├── maf.png
 │   ├── magentic-workflow.png
+│   ├── main.png
 │   ├── sequential-workflow.png
 │   ├── threads-and-memory.png
+│   ├── what-is-agent.png
 │   └── workflow-example.png
-├── discussions/               # Created by magentic_example.py at runtime (Markdown logs)
-└── README.md                  # This file
+├── discussions/              # Auto-generated: Markdown logs from magentic_example.py
+└── README.md                 # This file
 ```
 
 ## 📝 Environment Variables
@@ -160,23 +184,33 @@ API_VERSION=2025-01-01-preview
 
 ## 📚 Jupyter Notebook Contents
 
-The `agent_framework.ipynb` tutorial is organized into 12 progressive sections:
+The `agent_framework.ipynb` tutorial is organized into 15+ progressive sections covering basic to production-ready patterns:
 
 | # | Section | What You'll Learn |
 |---|---------|------------------|
-| **0** | Shared Setup | Environment, models, sample data |
-| **1** | Basic Agent | Create and run your first agent |
-| **2** | Streaming | Real-time token streaming |
-| **3** | Multi-Turn Conversations | Thread-based memory |
-| **4** | Function Tools | Add custom capabilities |
-| **5** | Human-in-the-Loop | Approval workflows |
-| **6** | Middleware | Logging & observability |
-| **7** | Memory | Persistent user context |
-| **8** | Sequential Workflows | Classify → Draft → Review |
-| **9** | Branching Logic | Spam vs. NotSpam vs. Uncertain |
-| **10** | Fan-Out/Fan-In | Parallel processing |
-| **11** | Multi-Agent Group Chat | Team collaboration |
-| **12** | Capstone Demo | End-to-end system |
+| **0** | Environment Setup | Azure OpenAI client, models, sample data |
+| **1** | V0 — Basic Agent | Create and run your first support agent |
+| **2** | V0.1 — Streaming | Real-time token streaming for better UX |
+| **3** | V1 — Multi-Turn Conversations | Thread-based memory across conversations |
+| **4** | V1.1 — Function Tools | Connect to internal systems with `@tool` |
+| **4.1** | V1.2 — Multimodal Input | Handle screenshots and images |
+| **4.2** | V1.3 — Structured Output | Generate validated JSON with Pydantic |
+| **4.3** | V1.4 — MCP Integration | Connect external tools via MCP protocol |
+| **5** | V2 — Human-in-the-Loop | Approval workflows for sensitive actions |
+| **6** | V2.1 — Middleware | Logging, observability, and monitoring |
+| **6.2** | V2.2 — Error Handling | Retry logic, circuit breakers, resilience |
+| **6.3** | V2.3 — Rate Limiting | Protect against traffic spikes |
+| **6.4** | V2.4 — Caching | Optimize repeated queries (FAQ) |
+| **7** | V3 — Persistent Memory | Context that survives beyond single threads |
+| **8** | Sequential Workflows | Multi-stage pipelines (classify → draft → review) |
+| **9** | Branching Workflows | Conditional routing with switch-case logic |
+| **9.1** | Checkpointing | Resume failed workflows from last checkpoint |
+| **10** | Fan-Out/Fan-In | Parallel processing with result aggregation |
+| **11** | Group Chat | Multi-agent collaboration patterns |
+| **12** | Magentic Orchestration | Dynamic planning with manager coordination |
+| **13** | V4 — Evaluation & Testing | Quality metrics and automated testing |
+| **14** | Durable Agents | Production scalability with Azure Functions |
+| **15** | AG-UI Integration | Web interface for agent interactions |
 
 ## 📖 Learn More
 
