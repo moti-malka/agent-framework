@@ -125,16 +125,32 @@ agent-framework/
 ├── magentic_example.py        # Standalone Magentic orchestration demo
 ├── requirements.txt           # Python dependencies
 ├── .env                       # Azure OpenAI configuration (create this)
-├── .venv/                     # Python virtual environment
+├── .gitignore                 # Git ignore patterns
+├── .gitattributes             # Git attributes configuration
+├── .venv/                     # Python virtual environment (excluded from git)
+├── .github/                   # GitHub configuration
+│   ├── agents/                # Custom Copilot agents
+│   │   └── readme-updater.agent.md
+│   └── workflows/             # GitHub Actions workflows
+│       ├── readme-updater.md
+│       ├── readme-updater.lock.yml
+│       ├── notebook-sync.md
+│       └── notebook-sync.lock.yml
+├── docs/                      # Documentation assets
+│   └── index.html             # Interactive presentation page
 ├── images/                    # Architecture and workflow diagrams
 │   ├── agent-components.png
 │   ├── concurrent-workflow.png
+│   ├── customer_image.png
 │   ├── group-chat.png
+│   ├── maf.png
 │   ├── magentic-workflow.png
+│   ├── main.png
 │   ├── sequential-workflow.png
 │   ├── threads-and-memory.png
+│   ├── what-is-agent.png
 │   └── workflow-example.png
-├── discussions/               # Created by magentic_example.py at runtime (Markdown logs)
+├── discussions/               # Created at runtime by magentic_example.py (Markdown logs)
 └── README.md                  # This file
 ```
 
