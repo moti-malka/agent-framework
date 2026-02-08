@@ -126,13 +126,27 @@ agent-framework/
 ├── requirements.txt           # Python dependencies
 ├── .env                       # Azure OpenAI configuration (create this)
 ├── .venv/                     # Python virtual environment
+├── .github/                   # GitHub automation and custom agents
+│   ├── agents/                # Custom Copilot agent configurations
+│   │   └── readme-updater.agent.md
+│   └── workflows/             # Automated workflows
+│       ├── readme-updater.md  # Docs sync workflow
+│       ├── readme-updater.lock.yml
+│       ├── notebook-sync.md   # Notebook sync workflow
+│       └── notebook-sync.lock.yml
+├── docs/                      # Documentation website
+│   └── index.html             # Developer agenda/presentation page
 ├── images/                    # Architecture and workflow diagrams
 │   ├── agent-components.png
 │   ├── concurrent-workflow.png
+│   ├── customer_image.png
 │   ├── group-chat.png
+│   ├── maf.png
 │   ├── magentic-workflow.png
+│   ├── main.png
 │   ├── sequential-workflow.png
 │   ├── threads-and-memory.png
+│   ├── what-is-agent.png
 │   └── workflow-example.png
 ├── discussions/               # Created by magentic_example.py at runtime (Markdown logs)
 └── README.md                  # This file
@@ -178,10 +192,26 @@ The `agent_framework.ipynb` tutorial is organized into 12 progressive sections:
 | **11** | Multi-Agent Group Chat | Team collaboration |
 | **12** | Capstone Demo | End-to-end system |
 
+## 🤖 GitHub Automation
+
+This repository includes automated workflows powered by GitHub Copilot agents:
+
+### README Updater Workflow
+- **Trigger**: On every push to `main`
+- **Purpose**: Automatically keeps README.md synchronized with repository changes
+- **Agent**: Custom Copilot agent (`.github/agents/readme-updater.agent.md`)
+- **Output**: Creates a pull request when documentation updates are needed
+
+### Notebook Sync Workflow
+- **Trigger**: On push events
+- **Purpose**: Maintains synchronization between notebook and related resources
+- **Location**: `.github/workflows/notebook-sync.md`
+
 ## 📖 Learn More
 
 - [Agent Framework Documentation](https://github.com/microsoft/agent-framework)
 - [Azure OpenAI Service](https://azure.microsoft.com/products/ai-services/openai-service)
+- [Documentation Website](./docs/index.html) - Developer agenda and presentation
 
 ## License
 
