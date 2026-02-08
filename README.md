@@ -126,13 +126,27 @@ agent-framework/
 ├── requirements.txt           # Python dependencies
 ├── .env                       # Azure OpenAI configuration (create this)
 ├── .venv/                     # Python virtual environment
+├── .github/                   # GitHub automation
+│   ├── agents/                # Custom agent definitions
+│   │   └── readme-updater.agent.md
+│   └── workflows/             # Automated workflows
+│       ├── readme-updater.md  # Auto-update README on push
+│       ├── readme-updater.lock.yml
+│       ├── notebook-sync.md   # Daily notebook sync
+│       └── notebook-sync.lock.yml
+├── docs/                      # Documentation
+│   └── index.html             # Interactive HTML landing page
 ├── images/                    # Architecture and workflow diagrams
 │   ├── agent-components.png
 │   ├── concurrent-workflow.png
+│   ├── customer_image.png
 │   ├── group-chat.png
+│   ├── maf.png
 │   ├── magentic-workflow.png
+│   ├── main.png
 │   ├── sequential-workflow.png
 │   ├── threads-and-memory.png
+│   ├── what-is-agent.png
 │   └── workflow-example.png
 ├── discussions/               # Created by magentic_example.py at runtime (Markdown logs)
 └── README.md                  # This file
@@ -178,10 +192,26 @@ The `agent_framework.ipynb` tutorial is organized into 12 progressive sections:
 | **11** | Multi-Agent Group Chat | Team collaboration |
 | **12** | Capstone Demo | End-to-end system |
 
+## 🤖 Automated Maintenance
+
+This repository includes GitHub workflows for automated documentation maintenance:
+
+### README Updater
+- **Trigger**: Every push to main branch
+- **Purpose**: Automatically keeps README.md synchronized with code changes
+- **Location**: `.github/workflows/readme-updater.md`
+
+### Notebook Sync
+- **Trigger**: Daily at 8:30 AM UTC (or manual)
+- **Purpose**: Syncs `agent_framework.ipynb` with latest Microsoft Agent Framework features
+- **Features**: Fetches from Microsoft Learn docs and GitHub samples
+- **Location**: `.github/workflows/notebook-sync.md`
+
 ## 📖 Learn More
 
 - [Agent Framework Documentation](https://github.com/microsoft/agent-framework)
 - [Azure OpenAI Service](https://azure.microsoft.com/products/ai-services/openai-service)
+- [Interactive Docs](docs/index.html) - Visual overview and presentation
 
 ## License
 
