@@ -15,6 +15,9 @@ azure-identity>=1.15.0
 # Data validation and settings management (required by agent-framework)
 pydantic>=2.0.0
 
+# For visualizing agent interactions (optional, but recommended for development)
+graphviz>=0.20.0
+
 # Optional: For enhanced development experience
 # jupyter>=1.0.0
 # ipykernel>=6.29.0
