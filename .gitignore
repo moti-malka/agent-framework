@@ -46,6 +46,18 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 
+# Workshop admin files (solutions, catalog, test runner)
+workshop/solutions/
+workshop/vulnerable_app/
+workshop/security_catalog.py
+workshop/run_tests.py
+workshop/SECURITY_CATALOG.md
+
+# Workshop output files
+*.scoring.json
+score_workflow.py
+
+
 # Translations
 *.mo
 *.pot
@@ -74,3 +86,4 @@ ENV/
 env/
 .venv/
 .github/aw/actions-lock.json
+workshop/challenge_10_output.json

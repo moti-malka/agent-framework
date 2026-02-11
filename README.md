@@ -55,9 +55,9 @@ pip install -r requirements.txt
 
 # 4. Configure environment
 # Create a .env file with your Azure OpenAI configuration:
-AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com/
+AZURE_OPENAI_ENDPOINT=https://your-apim-gateway.azure-api.net  # APIM gateway URL
 AZURE_OPENAI_CHAT_DEPLOYMENT_NAME=gpt-4o-mini
-AZURE_OPENAI_API_KEY=your-api-key  # Optional if using Azure CLI authentication
+AZURE_OPENAI_API_KEY=your-apim-subscription-key  # APIM subscription key
 API_VERSION=2025-01-01-preview  # Optional, defaults to this value
 
 # 5. Login to Azure (for CLI-based authentication)
