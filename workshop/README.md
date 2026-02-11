@@ -59,9 +59,10 @@ GITHUB_PERSONAL_ACCESS_TOKEN=ghp_your_token_here
 ```
 
 ### Target Repository
-The workshop scans a vulnerable demo application. Set:
+The workshop scans a vulnerable demo application hosted on GitHub:
 ```bash
-GITHUB_REPO=workshop/vulnerable_app
+# This is pre-configured in shared_models.py — no need to set manually
+# GITHUB_REPO=galshohat/vulnerable-app
 ```
 
 ## 🚀 Getting Started
@@ -95,21 +96,19 @@ AZURE_TENANT_ID=your-tenant-id
 
 # GitHub Access
 GITHUB_PERSONAL_ACCESS_TOKEN=ghp_your_token_here
-GITHUB_REPO=workshop/vulnerable_app
 ```
 
 ### 3. Verify Setup
 
-Run the verification script to check your environment:
+Test your environment by running Challenge 01 directly:
 
 ```bash
-python _verify.py
+cd workshop/challenges
+python challenge_01_repo_access.py
 ```
 
-This ensures:
-- All required environment variables are set
+If it runs successfully, your environment is configured correctly:
 - Azure OpenAI connection works
-- Azure AI Agent Service connection works
 - MCP server can access GitHub
 - Target repository is accessible
 
@@ -140,15 +139,18 @@ Start with Challenge 01 and work through them sequentially.
 
 ## 🧪 Testing Your Solutions
 
-### Individual Challenge Testing
+### Running Individual Challenges
 
-Test a single challenge using the test runner:
+Each challenge file has a built-in test function. Run the challenge directly:
 
 ```bash
-python workshop/run_tests.py --only 1   # Test challenge 01
-python workshop/run_tests.py --only 5   # Test challenge 05
-python workshop/run_tests.py --only 10  # Test final workflow
+cd workshop/challenges
+python challenge_01_repo_access.py    # Test challenge 01
+python challenge_04_secrets_scanner.py # Test challenge 04
+python challenge_10_workflow.py        # Run final workflow
 ```
+
+Each challenge imports from previous ones, so work through them sequentially.
 
 ### Understanding Test Output
 
@@ -161,39 +163,26 @@ Each test shows:
 
 Example test output:
 ```
-🛡️  CHALLENGE TEST RUNNER
-===========================================================
-Solution 04 — Secrets Scanner
-===========================================================
+🔑 Running secrets scanner...
    🔑 [SecretsScanner] activated
   📞 Calling: list_repo_files()
   📤 Result: .env, app.py, auth.py...
 🧠 Vulnerabilities in memory: 11
 📂 Files covered: 5
-✅ Test passed in 22.8s
+✅ Challenge 04 complete!
 ```
 
-### Final Workflow Scoring
+### Final Workflow Output
 
-Challenge 10 generates a JSON output file that you can score:
+Challenge 10 automatically generates a JSON output file with your scan results:
 
 ```bash
-# Run the final workflow
-python workshop/run_tests.py --only 10
-
-# Score your results
-python workshop/score_workflow.py workshop/challenge_10_output.json
+cd workshop/challenges
+python challenge_10_workflow.py
 ```
 
-**Scoring output:**
-```
-📊 Workflow Scoring Results
-Total vulnerabilities found: 45
-Catalog vulnerabilities: 95
-Matched: 35 ✅
-Missed: 60 ❌
-Score: 36.8% (Bronze 🥉)
-```
+After running, check your results in `workshop/challenge_10_output.json`.
+The output includes vulnerability counts, files scanned, scanner breakdown, and timing.
 
 ## 🏆 Achievement Tiers
 
@@ -229,7 +218,7 @@ Your Challenge 10 workflow should produce JSON matching this structure:
 {
   "workshop_id": "agent-framework-security-scan",
   "timestamp": "2025-01-09T12:00:00Z",
-  "repository": "workshop/vulnerable_app",
+  "repository": "galshohat/vulnerable-app",
   "scan_summary": {
     "total_vulnerabilities": 45,
     "files_scanned": 15,
@@ -253,7 +242,7 @@ Your Challenge 10 workflow should produce JSON matching this structure:
 }
 ```
 
-See [workshop/expected_workflow_output.json](workshop/expected_workflow_output.json) for a complete template.
+See [expected_workflow_output.json](challenges/expected_workflow_output.json) for a complete template.
 
 ## 🛠️ Key Concepts
 
@@ -403,4 +392,4 @@ This workshop is provided for educational purposes.
 
 ---
 
-**Ready to start?** Jump to [Challenge 01](workshop/challenges/challenge_01_repo_access.py) and begin building your security scanning agents!
+**Ready to start?** Jump to [Challenge 01](challenges/challenge_01_repo_access.py) and begin building your security scanning agents!
