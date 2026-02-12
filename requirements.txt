@@ -1,7 +1,7 @@
 # Microsoft Agent Framework (pre-release)
-# IMPORTANT: Install with --pre flag: pip install -U agent-framework --pre
-# This is REQUIRED to get the latest features including as_agent() method
-agent-framework
+# IMPORTANT: Install with --pre flag: pip install -r requirements.txt --pre
+agent-framework==1.0.0b260130
+agent-framework-azure-ai==1.0.0b260130
 
 # Environment variable management
 python-dotenv>=1.0.0
