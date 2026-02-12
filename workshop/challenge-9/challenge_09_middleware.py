@@ -13,6 +13,10 @@ Export:
     tool_logging_middleware     — middleware that logs tool invocations
 """
 
+import sys, os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import _paths  # noqa: F401
+
 import asyncio
 import os
 import time

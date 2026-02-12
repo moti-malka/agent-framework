@@ -13,6 +13,10 @@ Export:
     repo_explorer     — an agent that can navigate the repository
 """
 
+import sys, os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import _paths  # noqa: F401
+
 import asyncio
 import nest_asyncio
 nest_asyncio.apply()

@@ -13,6 +13,10 @@ Export:
     code_vuln_scanner  — an agent that detects code vulnerabilities
 """
 
+import sys, os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import _paths  # noqa: F401
+
 import asyncio
 import os
 import nest_asyncio

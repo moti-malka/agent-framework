@@ -1,1 +1,0 @@
-# Workshop challenges package
