@@ -39,6 +39,7 @@ chat_client_mcp = create_mcp_client()
 from challenge_01_repo_access import github_mcp_tool
 from challenge_02_file_tools import read_repo_file, list_repo_files
 from challenge_03_memory import scan_memory, report_vulnerability, mark_file_scanned
+from challenge_04_middleware import agent_logging_middleware, tool_logging_middleware
 
 
 # ═════════════════════════════════════════════════════════════════════
@@ -57,6 +58,8 @@ from challenge_03_memory import scan_memory, report_vulnerability, mark_file_sca
 #     of secrets? (API keys, database passwords, encryption keys, etc.)
 #   - Which files are most likely to contain secrets?
 #   - The agent needs context_providers=[scan_memory] to see previous findings
+#   - Use middleware=[agent_logging_middleware, tool_logging_middleware]
+#     to get observability from Challenge 04
 #
 # NOTE: Every secret is self-contained in its own file — no cross-file
 # correlation is needed. Each file has secrets directly visible as

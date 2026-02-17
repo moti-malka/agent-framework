@@ -36,6 +36,7 @@ chat_client_mcp = create_mcp_client()
 from challenge_01_repo_access import github_mcp_tool
 from challenge_02_file_tools import read_repo_file, list_repo_files
 from challenge_03_memory import scan_memory, report_vulnerability, mark_file_scanned
+from challenge_04_middleware import agent_logging_middleware, tool_logging_middleware
 
 
 # ═════════════════════════════════════════════════════════════════════
@@ -58,6 +59,7 @@ from challenge_03_memory import scan_memory, report_vulnerability, mark_file_sca
 #     report_vulnerability, mark_file_scanned
 #   - Use context_providers=[scan_memory]
 #   - Use response_format=VulnerabilityList for structured output
+#   - Use middleware=[agent_logging_middleware, tool_logging_middleware]
 #   - Call report_vulnerability for EACH finding
 #   - Call mark_file_scanned after analyzing each file
 #
