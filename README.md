@@ -4,7 +4,7 @@ A comprehensive collection of learning resources for building AI-powered systems
 
 ## 🎯 What's Included
 
-This repository contains two main learning resources:
+This repository contains two main learning resources, plus a beautiful landing page and automated workflows:
 
 ### 1. **Support Email Copilot** (Jupyter Notebook)
 An interactive tutorial that progressively teaches framework capabilities:
@@ -28,6 +28,21 @@ A Magentic orchestration demo featuring collaborative AI agents:
 - 📄 **Live Logging** - Real-time Markdown discussion logs
 - ⚡ **Streaming Output** - See agent discussions as they happen
 - 🔄 **Human-in-the-Loop** - Optional plan review and approval
+
+### 3. **Project Website** (Docs Landing Page)
+A beautiful, animated landing page showcasing the framework:
+
+- 🎨 **Modern UI** - Gradient backgrounds, particle animations, responsive design
+- 📚 **Visual Guide** - Interactive diagrams showing agent workflows
+- 🚀 **Quick Access** - Direct links to the GitHub repository
+- 📱 **Mobile Friendly** - Fully responsive layout
+
+### 4. **GitHub Automation** (Workflows)
+Automated maintenance workflows:
+
+- 🔄 **Notebook Sync** - Keeps docs and notebook in sync
+- 📝 **README Updater** - Automatically updates documentation on changes
+- 🤖 **Custom Agent** - AI-powered documentation maintenance
 
 ## 🚀 Quick Start
 
@@ -85,6 +100,15 @@ python magentic_example.py
 # - Review the generated discussion log in discussions/ folder
 ```
 
+**Option 3: View the Project Website**
+```bash
+# Open the landing page in your browser
+open docs/index.html
+# or
+python -m http.server 8000 --directory docs
+# Then visit http://localhost:8000
+```
+
 ## 🏗️ Framework Features Demonstrated
 
 ### Jupyter Notebook (`agent_framework.ipynb`)
@@ -126,6 +150,8 @@ agent-framework/
 ├── requirements.txt           # Python dependencies
 ├── .env                       # Azure OpenAI configuration (create this)
 ├── .venv/                     # Python virtual environment
+├── docs/                      # Project website
+│   └── index.html            # Landing page with visual guide
 ├── images/                    # Architecture and workflow diagrams
 │   ├── agent-components.png
 │   ├── concurrent-workflow.png
@@ -134,6 +160,12 @@ agent-framework/
 │   ├── sequential-workflow.png
 │   ├── threads-and-memory.png
 │   └── workflow-example.png
+├── .github/                   # GitHub automation
+│   ├── workflows/            # Automated maintenance workflows
+│   │   ├── notebook-sync.md  # Notebook sync workflow definition
+│   │   └── readme-updater.md # README updater workflow definition
+│   └── agents/               # Custom AI agents
+│       └── readme-updater.agent.md  # Documentation agent config
 ├── discussions/               # Created by magentic_example.py at runtime (Markdown logs)
 └── README.md                  # This file
 ```
