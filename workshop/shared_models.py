@@ -81,3 +81,32 @@ class VulnerabilityList(BaseModel):
     Scoring matches by file name + line range overlap.
     """
     vulnerabilities: List[Vulnerability] = Field(default_factory=list)
+
+
+# ─── Scanner Breakdown Model ─────────────────────────────────────────
+class ScannerFindings(BaseModel):
+    """Summary of a single scanner's findings."""
+    findings: int = Field(default=0, description="Number of vulnerabilities found by this scanner")
+    files: List[str] = Field(default_factory=list, description="Files scanned by this scanner")
+
+
+class ScanSummary(BaseModel):
+    """High-level scan summary."""
+    total_vulnerabilities: int = Field(default=0, description="Total vulnerabilities found across all scanners")
+    files_scanned: int = Field(default=0, description="Number of unique files scanned")
+    scanners_used: List[str] = Field(default_factory=list, description="Names of scanners that participated")
+
+
+class WorkflowReport(BaseModel):
+    """Complete structured output for the security workflow.
+
+    Matches the format in expected_workflow_output.json.
+    The workflow should populate all fields with actual scan results.
+    """
+    workshop_id: str = Field(default="agent-framework-security-scan", description="Workshop identifier")
+    timestamp: str = Field(default="", description="ISO-8601 timestamp of scan completion")
+    repository: str = Field(default="", description="Repository that was scanned (owner/name)")
+    scan_summary: ScanSummary = Field(default_factory=ScanSummary, description="High-level scan summary")
+    vulnerabilities: List[Vulnerability] = Field(default_factory=list, description="All vulnerabilities found")
+    files_covered: List[str] = Field(default_factory=list, description="All files that were scanned")
+    scanner_breakdown: dict[str, ScannerFindings] = Field(default_factory=dict, description="Per-scanner breakdown of findings")

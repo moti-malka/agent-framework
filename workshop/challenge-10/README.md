@@ -55,6 +55,27 @@ Choose one of these Agent Framework workflow builders:
 2. **`FINAL_ANSWER_PROMPT`** — Instructions for how the manager wraps up
 3. **`security_workflow`** — The complete orchestrated workflow
 
+### How the Report Works
+
+The test function uses `build_workflow_report()` (already provided) to convert
+`scan_memory` into a typed `WorkflowReport` Pydantic model matching
+[`expected_workflow_output.json`](../expected_workflow_output.json):
+
+```python
+WorkflowReport(
+    workshop_id="agent-framework-security-scan",
+    timestamp="...",
+    repository="galshohat/vulnerable-app",
+    scan_summary=ScanSummary(total_vulnerabilities=..., files_scanned=..., scanners_used=[...]),
+    vulnerabilities=[Vulnerability(file=..., start_line=..., end_line=..., description=...), ...],
+    files_covered=["app.py", "auth.py", ...],
+    scanner_breakdown={"SecretsScanner": ScannerFindings(findings=11, files=[...]), ...},
+)
+```
+
+The report is serialised with `report.model_dump()` and saved to
+`workshop/challenge_10_output.json`.
+
 ### Think About
 
 - Which orchestration pattern fits best for independent scanners?

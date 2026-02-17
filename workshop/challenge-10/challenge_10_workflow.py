@@ -29,9 +29,12 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import _paths  # noqa: F401
 
 import asyncio
+import json
 import os
 import logging
 import time
+from datetime import datetime, timezone
+
 import nest_asyncio
 nest_asyncio.apply()
 
@@ -48,7 +51,10 @@ from agent_framework.orchestrations import (
     ConcurrentBuilder,  # Option D: all agents run in parallel simultaneously
 )
 
-from shared_models import GITHUB_REPO, create_mcp_client, create_chat_client
+from shared_models import (
+    GITHUB_REPO, create_mcp_client, create_chat_client,
+    Vulnerability, ScanSummary, ScannerFindings, WorkflowReport,
+)
 
 load_dotenv()
 
@@ -189,6 +195,50 @@ FINAL_ANSWER_PROMPT = None  # Replace with your implementation
 security_workflow = None  # Replace with your implementation
 
 
+# ─── Report Builder (DO NOT MODIFY) ──────────────────────────────────────────────────
+def build_workflow_report(
+    agent_calls: dict[str, int],
+    elapsed: float,
+) -> WorkflowReport:
+    """Build a structured WorkflowReport from scan_memory."""
+    vulns = [
+        Vulnerability(
+            file=v["file"],
+            start_line=v["start_line"],
+            end_line=v["end_line"],
+            description=v["description"],
+        )
+        for v in scan_memory.vulnerabilities
+    ]
+
+    scanner_names = [s for s in agent_calls if s != "magentic_orchestrator"]
+    breakdown: dict[str, ScannerFindings] = {}
+    for scanner in scanner_names:
+        scanner_vulns = [
+            v for v in scan_memory.vulnerabilities
+            if v.get("scanner", "unknown") == scanner
+        ]
+        scanner_files = sorted({v["file"] for v in scanner_vulns})
+        breakdown[scanner] = ScannerFindings(
+            findings=len(scanner_vulns),
+            files=scanner_files,
+        )
+
+    return WorkflowReport(
+        workshop_id="agent-framework-security-scan",
+        timestamp=datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+        repository=GITHUB_REPO,
+        scan_summary=ScanSummary(
+            total_vulnerabilities=len(vulns),
+            files_scanned=len(scan_memory.files_covered),
+            scanners_used=scanner_names,
+        ),
+        vulnerabilities=vulns,
+        files_covered=sorted(scan_memory.files_covered),
+        scanner_breakdown=breakdown,
+    )
+
+
 # ─── Test (DO NOT MODIFY) ────────────────────────────────────────────
 async def test_challenge_10():
     assert security_workflow is not None, "security_workflow is not set"
@@ -241,7 +291,7 @@ async def test_challenge_10():
 
     # ── Results from memory ──
     print(f"\n🧠 Vulnerabilities in memory: {len(scan_memory.vulnerabilities)}")
-    print(f"📂 Files covered: {len(scan_memory.files_covered)}")
+    print(f"📂 Files covered: {len(scan_memory.files_covered)} — {sorted(scan_memory.files_covered)}")
 
     for v in scan_memory.vulnerabilities[:10]:
         print(f"   📌 {v['file']}:{v['start_line']}-{v['end_line']} — {v['description'][:60]}")
@@ -251,38 +301,24 @@ async def test_challenge_10():
     assert len(scan_memory.vulnerabilities) > 0, \
         "Memory should have vulnerabilities after the scan"
 
-    # ── Export results to JSON ──
-    import json
-    from datetime import datetime
-    
-    output_data = {
-        "workshop_id": "agent-framework-security-scan",
-        "timestamp": datetime.utcnow().isoformat() + "Z",
-        "repository": GITHUB_REPO,
-        "scan_summary": {
-            "total_vulnerabilities": len(scan_memory.vulnerabilities),
-            "files_scanned": len(scan_memory.files_covered),
-            "scanners_used": list(agent_calls.keys()),
-            "scan_duration_seconds": round(elapsed, 1),
-        },
-        "vulnerabilities": list(scan_memory.vulnerabilities),
-        "files_covered": sorted(scan_memory.files_covered),
-        "scanner_breakdown": {
-            scanner: {
-                "findings": sum(1 for v in scan_memory.vulnerabilities 
-                              if v.get('scanner', 'unknown') == scanner),
-                "files": sorted({v['file'] for v in scan_memory.vulnerabilities 
-                               if v.get('scanner', 'unknown') == scanner})
-            } for scanner in agent_calls.keys()
-        }
-    }
-    
-    output_file = "workshop/challenge_10_output.json"
-    with open(output_file, 'w') as f:
-        json.dump(output_data, f, indent=2)
-    
+    # ── Build structured report ──
+    report = build_workflow_report(agent_calls, elapsed)
+    print(f"\n📋 Workflow Report:")
+    print(f"   Total vulnerabilities: {report.scan_summary.total_vulnerabilities}")
+    print(f"   Files scanned: {report.scan_summary.files_scanned}")
+    print(f"   Scanners used: {report.scan_summary.scanners_used}")
+    for scanner_name, findings in report.scanner_breakdown.items():
+        print(f"   {scanner_name}: {findings.findings} findings in {findings.files}")
+
+    # ── Save to JSON ──
+    output_file = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)),
+        "..", "challenge_10_output.json"
+    )
+    os.makedirs(os.path.dirname(output_file), exist_ok=True)
+    with open(output_file, "w") as f:
+        json.dump(report.model_dump(), f, indent=2)
     print(f"\n💾 Results saved to: {output_file}")
-    print(f"   Run: python workshop/score_workflow.py {output_file}")
 
     print(f"\n{'=' * 60}")
     print("✅ Challenge 10 complete — run the test runner to see your score!")
