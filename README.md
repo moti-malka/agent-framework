@@ -135,6 +135,12 @@ agent-framework/
 │   ├── threads-and-memory.png
 │   └── workflow-example.png
 ├── discussions/               # Created by magentic_example.py at runtime (Markdown logs)
+├── .github/
+│   ├── workflows/             # Automated maintenance workflows
+│   │   ├── notebook-sync.md   # Daily: Syncs notebook with latest Microsoft docs
+│   │   └── readme-updater.md  # On push: Keeps README up-to-date
+│   └── agents/
+│       └── readme-updater.agent.md  # Agent configuration for documentation
 └── README.md                  # This file
 ```
 
@@ -177,6 +183,22 @@ The `agent_framework.ipynb` tutorial is organized into 12 progressive sections:
 | **10** | Fan-Out/Fan-In | Parallel processing |
 | **11** | Multi-Agent Group Chat | Team collaboration |
 | **12** | Capstone Demo | End-to-end system |
+
+## 🤖 Automated Maintenance
+
+This repository includes two GitHub workflows that keep content up-to-date:
+
+### 📚 Notebook Sync (Daily at 8:30 AM UTC)
+- Automatically checks Microsoft Agent Framework documentation for new features
+- Updates `agent_framework.ipynb` with missing capabilities
+- Creates pull requests when new content is added
+- Ensures the tutorial stays current with the latest framework releases
+
+### 📝 README Updater (On every push to main)
+- Monitors repository changes (files, APIs, configs, structure)
+- Updates README.md sections as needed (Features, Setup, Usage, etc.)
+- Creates pull requests with documentation updates
+- Keeps documentation synchronized with code changes
 
 ## 📖 Learn More
 
