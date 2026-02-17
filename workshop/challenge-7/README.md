@@ -33,6 +33,7 @@ A `code_vuln_scanner` agent that:
 - Calls `report_vulnerability()` for EACH finding
 - Calls `mark_file_scanned()` after analyzing each file
 - Uses `response_format=VulnerabilityList` and `context_providers=[scan_memory]`
+- Uses `middleware=[agent_logging_middleware, tool_logging_middleware]` from Challenge 4
 
 ### Exports
 

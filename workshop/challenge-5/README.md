@@ -30,6 +30,7 @@ A `secrets_scanner` agent that:
 - Calls `report_vulnerability()` for EACH finding
 - Calls `mark_file_scanned()` after analyzing each file
 - Uses `context_providers=[scan_memory]` to avoid duplicate work
+- Uses `middleware=[agent_logging_middleware, tool_logging_middleware]` from Challenge 4
 
 ### Think About
 

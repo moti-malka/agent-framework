@@ -33,6 +33,7 @@ A `structured_scanner` agent that:
 - Calls `report_vulnerability()` for each finding (→ memory)
 - Produces a final `VulnerabilityList` JSON response via `response_format`
 - Uses `context_providers=[scan_memory]`
+- Uses `middleware=[agent_logging_middleware, tool_logging_middleware]` from Challenge 4
 
 ### Think About
 
