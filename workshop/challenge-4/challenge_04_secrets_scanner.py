@@ -26,7 +26,7 @@ import nest_asyncio
 nest_asyncio.apply()
 
 from dotenv import load_dotenv
-from agent_framework import ChatAgent
+from agent_framework import Agent
 
 from shared_models import GITHUB_REPO, create_mcp_client, create_chat_client
 
@@ -56,7 +56,7 @@ from challenge_03_memory import scan_memory, report_vulnerability, mark_file_sca
 #   - What instructions would guide it to recognize different types
 #     of secrets? (API keys, database passwords, encryption keys, etc.)
 #   - Which files are most likely to contain secrets?
-#   - The agent needs context_provider=scan_memory to see previous findings
+#   - The agent needs context_providers=[scan_memory] to see previous findings
 #
 # NOTE: Every secret is self-contained in its own file — no cross-file
 # correlation is needed. Each file has secrets directly visible as

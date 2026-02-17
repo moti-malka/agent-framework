@@ -8,7 +8,8 @@ In production, you need visibility into what your scanning agents are doing: whi
 
 - Build middleware that wraps agent execution with logging
 - Build middleware that wraps individual tool/function calls
-- Understand the `AgentRunContext` and `FunctionInvocationContext` patterns
+- Understand the `AgentContext` and `FunctionInvocationContext` patterns
+- Use `@agent_middleware` and `@function_middleware` decorators
 
 ## Key Concepts
 
@@ -43,18 +44,24 @@ Middleware wraps execution at two levels:
 
 ### Middleware Signatures
 
-```python
-async def agent_logging_middleware(
-    context: AgentRunContext,
-    next: Callable[[AgentRunContext], Awaitable[None]],
-) -> None:
-    # Log start, call next(context), log end
+Middleware functions must be decorated with the appropriate decorator:
 
+```python
+@agent_middleware
+async def agent_logging_middleware(
+    context: AgentContext,
+    call_next: Callable[[], Awaitable[None]],
+) -> None:
+    # Log start, call await call_next(), log end
+    # NOTE: call_next() takes NO arguments for agent middleware
+
+@function_middleware
 async def tool_logging_middleware(
     context: FunctionInvocationContext,
     next: Callable[[FunctionInvocationContext], Awaitable[None]],
 ) -> None:
-    # Log tool name + args, call next(context), log result
+    # Log tool name + args, call await next(context), log result
+    # NOTE: next() DOES take context for function middleware
 ```
 
 ### Exports

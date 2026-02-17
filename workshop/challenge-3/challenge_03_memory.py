@@ -31,8 +31,9 @@ nest_asyncio.apply()
 
 from dotenv import load_dotenv
 from agent_framework import (
-    ChatAgent, ChatMessage, ContextProvider, Context, tool
+    Agent, Message, BaseContextProvider, SessionContext, AgentSession, tool
 )
+from typing import Any
 from collections.abc import MutableSequence, Sequence
 from typing import Any, Annotated
 from pydantic import Field
@@ -48,9 +49,9 @@ from challenge_02_file_tools import read_repo_file, list_repo_files
 
 
 # ═════════════════════════════════════════════════════════════════════
-# TODO 1: Create a ScanMemory ContextProvider
+# TODO 1: Create a ScanMemory BaseContextProvider
 #
-# This ContextProvider tracks scan progress across multiple agents:
+# This BaseContextProvider tracks scan progress across multiple agents:
 #   - files_covered (set of str): which files have been analyzed
 #   - vulnerabilities (list of dict): findings so far, each dict has
 #     keys "file" (str), "start_line" (int), "end_line" (int), "description" (str)
@@ -66,13 +67,16 @@ from challenge_02_file_tools import read_repo_file, list_repo_files
 #     For single-line vulnerabilities, start_line == end_line.
 #     Each vulnerability dict should have keys: "file", "start_line", "end_line", "description", "scanner"
 #
-# ContextProvider hooks:
-#   invoking(messages, **kwargs) -> Context
-#     Called BEFORE an agent runs. Return a Context with instructions
-#     telling the agent what files are already covered and how many
+# BaseContextProvider hooks:
+#
+#   __init__(self, ...) — MUST call super().__init__(source_id="scan_memory")
+#
+#   async def before_run(self, *, agent, session: AgentSession, context: SessionContext, state: dict[str, Any]) -> None:
+#     Called BEFORE an agent runs. Use context.extend_instructions(self.source_id, ...)
+#     to tell the agent what files are already covered and how many
 #     vulnerabilities were found so far, so agents can avoid duplicate work.
 #
-#   invoked(request_messages, response_messages, **kwargs) -> None
+#   async def after_run(self, *, agent, session: AgentSession, context: SessionContext, state: dict[str, Any]) -> None:
 #     Called AFTER an agent runs. Try to parse any structured vulnerability
 #     JSON from the agent's response and add new findings to memory.
 #     This is a backup for agents using response_format — they may
@@ -82,8 +86,10 @@ from challenge_02_file_tools import read_repo_file, list_repo_files
 # Create a module-level instance: scan_memory = ScanMemory()
 # ═════════════════════════════════════════════════════════════════════
 
-# class ScanMemory(ContextProvider):
-#     ...
+# class ScanMemory(BaseContextProvider):
+#     def __init__(self):
+#         super().__init__(source_id="scan_memory")
+#         ...
 
 scan_memory = None  # Replace with your implementation
 
@@ -143,8 +149,8 @@ async def test_challenge_03():
     scan_memory.reset()
 
     # Create a test agent that uses memory + tools
-    test_agent = ChatAgent(
-        chat_client=chat_client,
+    test_agent = Agent(
+        client=chat_client,
         name="MemoryTestAgent",
         instructions=(
             "You are a security scanner. Read the specified file and find "
@@ -153,7 +159,7 @@ async def test_challenge_03():
             "After analyzing the file, call mark_file_scanned with the file path."
         ),
         tools=[read_repo_file, report_vulnerability, mark_file_scanned],
-        context_provider=scan_memory,
+        context_providers=[scan_memory],
     )
 
     print("🧠 Testing memory by scanning config.py...")

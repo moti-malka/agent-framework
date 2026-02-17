@@ -32,13 +32,13 @@ A `code_vuln_scanner` agent that:
 - Identifies code-level security vulnerabilities
 - Calls `report_vulnerability()` for EACH finding
 - Calls `mark_file_scanned()` after analyzing each file
-- Uses `response_format=VulnerabilityList` and `context_provider=scan_memory`
+- Uses `response_format=VulnerabilityList` and `context_providers=[scan_memory]`
 
 ### Exports
 
 | Variable | Type | Description |
 |----------|------|-------------|
-| `code_vuln_scanner` | `ChatAgent` | Agent that detects code vulnerabilities |
+| `code_vuln_scanner` | `Agent` | Agent that detects code vulnerabilities |
 
 ## Testing
 

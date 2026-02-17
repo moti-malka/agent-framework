@@ -35,25 +35,17 @@ import time
 import nest_asyncio
 nest_asyncio.apply()
 
-from typing import cast
+from typing import cast, Any
 from dotenv import load_dotenv
 from agent_framework import (
-    ChatAgent, ChatMessage, WorkflowOutputEvent,
-    AgentRunUpdateEvent,
+    Agent, Message, WorkflowEvent, AgentResponseUpdate,
+)
+from agent_framework.orchestrations import (
     # ── Workflow Builders (pick one) ──────────────────────────────────
     MagenticBuilder,    # Option A: manager dynamically delegates to scanners
     GroupChatBuilder,   # Option B: agents collaborate in shared conversation
     HandoffBuilder,     # Option C: agents hand off control in a chain
     ConcurrentBuilder,  # Option D: all agents run in parallel simultaneously
-    # ── Builder-specific event / state types ──────────────────────────
-    # MagenticBuilder events:
-    MagenticOrchestratorEvent, MagenticProgressLedger,
-    # GroupChatBuilder state:
-    GroupChatState,
-    # HandoffBuilder events:
-    HandoffAgentUserRequest, RequestInfoEvent,
-    # ConcurrentBuilder types:
-    AgentExecutorResponse,
 )
 
 from shared_models import GITHUB_REPO, create_mcp_client, create_chat_client
@@ -78,7 +70,7 @@ from challenge_09_middleware import agent_logging_middleware, tool_logging_middl
 # TODO 1: Define TASK_PROMPT
 #
 # This is the main task description passed to your workflow via
-# security_workflow.run_stream(TASK_PROMPT).
+# security_workflow.run(TASK_PROMPT, stream=True).
 #
 # It should instruct the scanning team to:
 #   - Comprehensively scan the repository for ALL vulnerability types
@@ -101,8 +93,8 @@ TASK_PROMPT = None  # Replace with your implementation
 # TODO 2: Define FINAL_ANSWER_PROMPT
 #
 # This tells the manager how to produce its final message after all
-# scanners have finished. Used with MagenticBuilder's
-# with_manager(final_answer_prompt=FINAL_ANSWER_PROMPT).
+# scanners have finished. Used with MagenticBuilder's constructor:
+# MagenticBuilder(..., final_answer_prompt=FINAL_ANSWER_PROMPT).
 #
 # The manager's final message is for display only — scoring comes
 # from memory. But a good summary helps you understand what was found.
@@ -135,49 +127,57 @@ FINAL_ANSWER_PROMPT = None  # Replace with your implementation
 # Choose a Builder pattern:
 #
 #   ── Option A: MagenticBuilder (dynamic delegation) ─────────────────
-#   Uses: MagenticBuilder, MagenticOrchestratorEvent, MagenticProgressLedger
+#   Uses: WorkflowEvent (event.type == "executor_invoked" / "output" / ...)
 #
-#     manager = ChatAgent(chat_client=chat_client, name="ScanManager", ...)
-#     workflow = (MagenticBuilder()
-#       .participants([scanner1, scanner2, ...])
-#       .with_manager(agent=manager, max_round_count=N,
-#                     max_stall_count=5,
-#                     final_answer_prompt=FINAL_ANSWER_PROMPT)
-#       .build())
+#     manager = Agent(client=chat_client, name="ScanManager", ...)
+#     workflow = MagenticBuilder(
+#         participants=[scanner1, scanner2, ...],
+#         manager_agent=manager,
+#         max_round_count=N,
+#         max_stall_count=5,
+#         final_answer_prompt=FINAL_ANSWER_PROMPT,
+#     ).build()
 #
 #   Event loop:
-#     async for event in workflow.run_stream(TASK_PROMPT):
-#         if isinstance(event, MagenticOrchestratorEvent):
-#             if isinstance(event.data, MagenticProgressLedger):
-#                 print("Progress ledger update")
+#     async for event in workflow.run(TASK_PROMPT, stream=True):
+#         if event.type == "executor_invoked":
+#             agent_id = event.executor_id  # which agent is speaking
+#             token = event.data            # streaming token (str)
+#         elif event.type == "output":
+#             print("Final output:", event.data)
 #
 #   ── Option B: GroupChatBuilder (collaborative cross-checking) ──────
-#   Uses: GroupChatBuilder, GroupChatState
+#   Uses: WorkflowEvent (event.type == "output" / ...)
 #
-#     workflow = (GroupChatBuilder()
-#       .participants([scanner1, scanner2, ...])
-#       .max_rounds(N)
-#       .build())
+#     workflow = GroupChatBuilder(
+#         participants=[scanner1, scanner2, ...],
+#         selection_func=my_selector,         # or orchestrator_agent=agent
+#         orchestrator_name="MyOrchestrator",
+#         termination_condition=my_condition,
+#     ).build()
 #
 #   ── Option C: HandoffBuilder (sequential escalation chain) ─────────
-#   Uses: HandoffBuilder, HandoffAgentUserRequest, RequestInfoEvent
+#   Uses: WorkflowEvent (event.type == "output" / "request_info" / ...)
 #
-#     workflow = (HandoffBuilder()
-#       .with_start_agent(scanner1)
-#       .add_handoff(from_agent=scanner1, to_agent=scanner2,
-#                    description="Hand off to code vuln scanner")
-#       .add_handoff(from_agent=scanner2, to_agent=scanner3, ...)
-#       .build())
+#     workflow = HandoffBuilder(
+#         start_agent=scanner1,
+#         handoffs=[
+#             (scanner1, scanner2, "Hand off to code vuln scanner"),
+#             (scanner2, scanner3, "Hand off to infra scanner"),
+#         ],
+#     ).build()
 #
 #   ── Option D: ConcurrentBuilder (parallel fan-out) ─────────────────
-#   Uses: ConcurrentBuilder, AgentExecutorResponse
+#   Uses: WorkflowEvent (event.type == "executor_response" / ...)
 #
-#     workflow = (ConcurrentBuilder()
-#       .add_agent(scanner1, prompt="Scan for secrets...")
-#       .add_agent(scanner2, prompt="Scan for code vulns...")
-#       .build())
+#     workflow = ConcurrentBuilder(
+#         agents=[
+#             (scanner1, "Scan for secrets..."),
+#             (scanner2, "Scan for code vulns..."),
+#         ],
+#     ).build()
 #
-# If using MagenticBuilder, you'll need a manager agent (ChatAgent)
+# If using MagenticBuilder, you'll need a manager agent (Agent)
 # to coordinate the scanners. Think about:
 #   - What instructions should the manager have?
 #   - How many rounds should the conversation go?
@@ -223,9 +223,9 @@ async def test_challenge_10():
     start_time = time.time()
     agent_calls: dict[str, int] = {}
 
-    async for event in security_workflow.run_stream(TASK_PROMPT):
-        if isinstance(event, AgentRunUpdateEvent):
-            eid = event.executor_id
+    async for event in security_workflow.run(TASK_PROMPT, stream=True):
+        if event.type == "executor_invoked":
+            eid = event.executor_id or str(event.data)
             if eid not in agent_calls:
                 emoji = {
                     "SecretsScanner": "🔑", "CodeVulnScanner": "🐛",

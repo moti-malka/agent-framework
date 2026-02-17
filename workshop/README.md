@@ -1,6 +1,6 @@
 # Agent Framework Security Workshop
 
-Welcome to the Agent Framework Security Workshop! In this hands-on workshop, you will build AI-powered security scanning agents using the **Microsoft Agent Framework** and orchestrate them into a complete vulnerability detection workflow targeting a real GitHub repository.
+Welcome to the Agent Framework Security Workshop! In this hands-on workshop, you will build AI-powered security scanning agents using the **Microsoft Agent Framework** (`agent-framework==1.0.0b260212`) and orchestrate them into a complete vulnerability detection workflow targeting a real GitHub repository.
 
 ## Introduction
 

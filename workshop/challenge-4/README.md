@@ -29,7 +29,7 @@ A `secrets_scanner` agent that:
 - Identifies hardcoded secrets and credentials
 - Calls `report_vulnerability()` for EACH finding
 - Calls `mark_file_scanned()` after analyzing each file
-- Uses `context_provider=scan_memory` to avoid duplicate work
+- Uses `context_providers=[scan_memory]` to avoid duplicate work
 
 ### Think About
 
@@ -43,7 +43,7 @@ A `secrets_scanner` agent that:
 
 | Variable | Type | Description |
 |----------|------|-------------|
-| `secrets_scanner` | `ChatAgent` | Agent that detects hardcoded secrets |
+| `secrets_scanner` | `Agent` | Agent that detects hardcoded secrets |
 
 ## Testing
 

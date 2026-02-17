@@ -28,7 +28,7 @@ An `auth_crypto_scanner` agent that:
 - Identifies weak hashing, insecure JWT usage, deprecated cryptography
 - Calls `report_vulnerability()` for EACH finding
 - Calls `mark_file_scanned()` after analyzing each file
-- Uses `response_format=VulnerabilityList` and `context_provider=scan_memory`
+- Uses `response_format=VulnerabilityList` and `context_providers=[scan_memory]`
 
 > **Note**: Each vulnerability is self-contained within its file. No cross-file correlation is needed.
 
@@ -36,7 +36,7 @@ An `auth_crypto_scanner` agent that:
 
 | Variable | Type | Description |
 |----------|------|-------------|
-| `auth_crypto_scanner` | `ChatAgent` | Agent that detects auth & crypto issues |
+| `auth_crypto_scanner` | `Agent` | Agent that detects auth & crypto issues |
 
 ## Testing
 

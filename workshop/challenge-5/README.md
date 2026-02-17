@@ -32,11 +32,11 @@ A `structured_scanner` agent that:
 - Scans for secrets (same domain as Challenge 4)
 - Calls `report_vulnerability()` for each finding (→ memory)
 - Produces a final `VulnerabilityList` JSON response via `response_format`
-- Uses `context_provider=scan_memory`
+- Uses `context_providers=[scan_memory]`
 
 ### Think About
 
-- How do you set `response_format` on a `ChatAgent`?
+- How do you set `response_format` on an `Agent`?
 - Should the instructions tell the agent to produce JSON in a specific shape?
 - How does this differ from Challenge 4's free-text scanner?
 
@@ -44,7 +44,7 @@ A `structured_scanner` agent that:
 
 | Variable | Type | Description |
 |----------|------|-------------|
-| `structured_scanner` | `ChatAgent` | Agent with structured `VulnerabilityList` output |
+| `structured_scanner` | `Agent` | Agent with structured `VulnerabilityList` output |
 
 ## Testing
 

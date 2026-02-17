@@ -25,8 +25,8 @@ nest_asyncio.apply()
 
 from dotenv import load_dotenv
 from agent_framework import (
-    AgentRunContext, FunctionInvocationContext,
-    ChatAgent
+    AgentContext, FunctionInvocationContext,
+    Agent, agent_middleware, function_middleware
 )
 from typing import Callable, Awaitable
 
@@ -49,15 +49,21 @@ from challenge_02_file_tools import read_repo_file, list_repo_files
 #   - Time how long the agent takes
 #   - Log when the agent finishes (with duration)
 #
-# Middleware signature:
+# IMPORTANT: You MUST decorate with @agent_middleware so the
+# framework recognizes this as agent-level middleware.
+#
+# Signature:
+#   @agent_middleware
 #   async def agent_logging_middleware(
-#       context: AgentRunContext,
-#       next: Callable[[AgentRunContext], Awaitable[None]],
+#       context: AgentContext,
+#       call_next: Callable[[], Awaitable[None]],
 #   ) -> None:
 #
 # Think about:
-#   - What information is available on AgentRunContext?
-#   - How do you pass control to the actual agent? (call next)
+#   - What information is available on AgentContext?
+#     (e.g., context.messages for the conversation history)
+#   - How do you pass control to the actual agent? (await call_next())
+#   - Note: call_next() takes NO arguments
 #   - Where do you measure start/end time?
 #
 # Assign to: agent_logging_middleware
@@ -73,7 +79,11 @@ agent_logging_middleware = None  # Replace with your implementation
 #   - Log which tool is being called and with what arguments
 #   - Log the tool's result (truncated if long)
 #
-# Middleware signature:
+# IMPORTANT: You MUST decorate with @function_middleware so the
+# framework recognizes this as function-level middleware.
+#
+# Signature:
+#   @function_middleware
 #   async def tool_logging_middleware(
 #       context: FunctionInvocationContext,
 #       next: Callable[[FunctionInvocationContext], Awaitable[None]],
@@ -81,8 +91,10 @@ agent_logging_middleware = None  # Replace with your implementation
 #
 # Think about:
 #   - What properties does FunctionInvocationContext have?
-#   - How do you get the function name and arguments?
-#   - How do you get the result after calling next()?
+#     (e.g., context.function.name, context.arguments, context.result)
+#   - How do you invoke the tool? (await next(context))
+#   - Note: next() DOES take context as an argument (unlike agent middleware)
+#   - How do you get the result after calling next(context)?
 #
 # Assign to: tool_logging_middleware
 # ═════════════════════════════════════════════════════════════════════

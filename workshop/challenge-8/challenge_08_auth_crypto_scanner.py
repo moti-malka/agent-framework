@@ -26,7 +26,7 @@ import nest_asyncio
 nest_asyncio.apply()
 
 from dotenv import load_dotenv
-from agent_framework import ChatAgent
+from agent_framework import Agent
 
 from shared_models import GITHUB_REPO, VulnerabilityList, create_mcp_client, create_chat_client
 
@@ -72,7 +72,7 @@ from challenge_03_memory import scan_memory, report_vulnerability, mark_file_sca
 # The agent MUST:
 #   - Use tools: read_repo_file, list_repo_files,
 #     report_vulnerability, mark_file_scanned
-#   - Use context_provider=scan_memory
+#   - Use context_providers=[scan_memory]
 #   - Use response_format=VulnerabilityList
 #   - Focus on auth.py, utils/crypto.py, and related files
 #

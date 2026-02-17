@@ -29,7 +29,7 @@ An `infra_scanner` agent that:
 - Identifies misconfigurations and known vulnerability patterns
 - Calls `report_vulnerability()` for EACH finding
 - Calls `mark_file_scanned()` after analyzing each file
-- Uses `response_format=VulnerabilityList` and `context_provider=scan_memory`
+- Uses `response_format=VulnerabilityList` and `context_providers=[scan_memory]`
 
 ### Think About
 
@@ -41,7 +41,7 @@ An `infra_scanner` agent that:
 
 | Variable | Type | Description |
 |----------|------|-------------|
-| `infra_scanner` | `ChatAgent` | Agent that scans dependencies, Docker, CI/CD, and IaC |
+| `infra_scanner` | `Agent` | Agent that scans dependencies, Docker, CI/CD, and IaC |
 
 ## Testing
 

@@ -7,7 +7,7 @@ In this challenge, you'll establish the foundational connection to a GitHub repo
 ## Learning Objectives
 
 - Understand how MCP tools connect agents to external services
-- Create a `HostedMCPTool` for GitHub integration
+- Create an MCP tool via `client.get_mcp_tool()` for GitHub integration
 - Build a `repo_explorer` agent that can navigate repository structures
 
 ## Architecture
@@ -15,7 +15,7 @@ In this challenge, you'll establish the foundational connection to a GitHub repo
 The connection follows this pattern:
 
 ```
-Agent → HostedMCPTool → GitHub MCP Server → Repository
+Agent → McpTool (via client.get_mcp_tool()) → GitHub MCP Server → Repository
 ```
 
 ## About Model Context Protocol (MCP)
@@ -23,16 +23,16 @@ Agent → HostedMCPTool → GitHub MCP Server → Repository
 MCP is an open standard for connecting AI agents to external data sources and tools. In this challenge, you'll use GitHub's MCP endpoint to give your agent read access to repository files without needing to clone the repo locally.
 
 Key concepts:
-- **HostedMCPTool**: A tool wrapper that connects to an MCP server
+- **McpTool** (via `client.get_mcp_tool()`): A tool obtained from an MCP-capable client that connects to an MCP server
 - **Approval mode**: Controls whether tool calls need user confirmation
-- **Chat client**: The AI model client used by MCP for processing
+- **Chat client**: The AI model client (e.g. `AzureAIAgentClient`) used by MCP for processing
 
 ## Step-by-Step Instructions
 
 ### What You Need to Build
 
-1. **`github_mcp_tool`** — A `HostedMCPTool` configured to connect to GitHub's MCP endpoint
-2. **`repo_explorer`** — A `ChatAgent` that uses the MCP tool to browse repository contents
+1. **`github_mcp_tool`** — An MCP tool obtained via `client.get_mcp_tool()` configured to connect to GitHub's MCP endpoint
+2. **`repo_explorer`** — An `Agent` that uses the MCP tool to browse repository contents
 
 ### Think About
 
@@ -44,8 +44,8 @@ Key concepts:
 
 | Variable | Type | Description |
 |----------|------|-------------|
-| `github_mcp_tool` | `HostedMCPTool` | Configured MCP tool for GitHub |
-| `repo_explorer` | `ChatAgent` | Agent that explores repository structure |
+| `github_mcp_tool` | `McpTool` | Configured MCP tool for GitHub (via `client.get_mcp_tool()`) |
+| `repo_explorer` | `Agent` | Agent that explores repository structure |
 
 ## Testing
 

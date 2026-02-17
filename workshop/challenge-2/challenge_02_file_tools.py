@@ -22,7 +22,7 @@ import nest_asyncio
 nest_asyncio.apply()
 
 from dotenv import load_dotenv
-from agent_framework import tool, ChatAgent
+from agent_framework import tool, Agent
 from typing import Annotated
 from pydantic import Field
 

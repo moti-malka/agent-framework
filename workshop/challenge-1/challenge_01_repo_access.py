@@ -9,7 +9,7 @@ explore the repository structure — list files, read directory contents,
 and understand the codebase layout.
 
 Export:
-    github_mcp_tool  — the HostedMCPTool configured for GitHub
+    github_mcp_tool  — the MCP tool configured for GitHub (via client.get_mcp_tool())
     repo_explorer     — an agent that can navigate the repository
 """
 
@@ -23,7 +23,7 @@ nest_asyncio.apply()
 
 from dotenv import load_dotenv
 from agent_framework_azure_ai import AzureAIAgentClient
-from agent_framework import ChatAgent, HostedMCPTool
+from agent_framework import Agent
 
 import os
 
@@ -40,13 +40,17 @@ chat_client_mcp = create_mcp_client()
 
 
 # ═════════════════════════════════════════════════════════════════════
-# TODO: Create a HostedMCPTool for GitHub
+# TODO: Create an MCP tool for GitHub
 #
-# You need a tool that connects to GitHub's MCP endpoint so agents
-# can browse repository contents. Think about:
+# Create MCP tools via
+# the client that supports hosted tools (AzureAIAgentClient):
+#   github_mcp_tool = chat_client_mcp.get_mcp_tool(
+#       name="...", url="...", headers={...}, approval_mode="..."
+#   )
+#
+# Think about:
 #   - What URL does GitHub's MCP server live at?
 #   - What approval mode makes sense for read-only operations?
-#   - Which chat client should MCP tools use?
 #
 # Assign it to: github_mcp_tool
 # ═════════════════════════════════════════════════════════════════════
@@ -61,6 +65,9 @@ github_mcp_tool = None  # Replace with your implementation
 #   - List all files and directories
 #   - Understand the project structure
 #   - It should use the MCP tool you just created
+#
+# Use the new Agent class (ChatAgent was renamed to Agent):
+#   Agent(client=chat_client_mcp, name="...", instructions="...", tools=[...])
 #
 # Think about what instructions would make this agent effective
 # at navigating a codebase it has never seen before.
