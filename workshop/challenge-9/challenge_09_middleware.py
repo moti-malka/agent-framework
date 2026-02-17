@@ -92,9 +92,9 @@ agent_logging_middleware = None  # Replace with your implementation
 # Think about:
 #   - What properties does FunctionInvocationContext have?
 #     (e.g., context.function.name, context.arguments, context.result)
-#   - How do you invoke the tool? (await next(context))
-#   - Note: next() DOES take context as an argument (unlike agent middleware)
-#   - How do you get the result after calling next(context)?
+#   - How do you invoke the tool? (await next())
+#   - Note: next() takes NO arguments (same as agent middleware)
+#   - How do you get the result after calling next()?
 #
 # Assign to: tool_logging_middleware
 # ═════════════════════════════════════════════════════════════════════
