@@ -2,7 +2,7 @@
 
 **Duration:** 20 minutes
 
-Before building scanner agents, you need a **shared memory system** that tracks which files have been scanned and what vulnerabilities were found. This memory is shared across ALL scanner agents (Challenges 4–8) and is the source of truth for the final scoring.
+Before building scanner agents, you need a **shared memory system** that tracks which files have been scanned and what vulnerabilities were found. This memory is shared across ALL scanner agents (Challenges 5–9) and is the source of truth for the final scoring.
 
 ## Learning Objectives
 

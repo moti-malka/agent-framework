@@ -65,13 +65,13 @@ python challenge_01_repo_access.py
 | [Challenge 0](challenge-0/README.md) | Environment Setup | 20 min | Set up dev environment, configure Azure and GitHub credentials |
 | [Challenge 1](challenge-1/README.md) | MCP Repository Access | 15 min | Connect to GitHub via Model Context Protocol |
 | [Challenge 2](challenge-2/README.md) | File Reading Tools | 15 min | Create reusable @tool functions for reading repository files |
-| [Challenge 3](challenge-3/README.md) | Scan Memory | 20 min | Build a ContextProvider for tracking vulnerabilities across agents |
-| [Challenge 4](challenge-4/README.md) | Secrets Scanner | 20 min | Detect hardcoded secrets, API keys, and credentials |
-| [Challenge 5](challenge-5/README.md) | Structured Output | 15 min | Use response_format with Pydantic models for consistent findings |
-| [Challenge 6](challenge-6/README.md) | Code Vulnerability Scanner | 20 min | Find injection, XSS, SSRF, and unsafe code patterns |
-| [Challenge 7](challenge-7/README.md) | Infrastructure Scanner | 20 min | Scan Docker, Terraform, CI/CD, and dependency configs |
-| [Challenge 8](challenge-8/README.md) | Auth and Crypto Scanner | 20 min | Detect weak hashing, JWT flaws, and deprecated crypto |
-| [Challenge 9](challenge-9/README.md) | Agent Middleware | 15 min | Add logging and observability with middleware chains |
+| [Challenge 3](challenge-3/README.md) | Scan Memory | 20 min | Build a BaseContextProvider for tracking vulnerabilities across agents |
+| [Challenge 4](challenge-4/README.md) | Observability Middleware | 15 min | Add logging and observability with middleware chains |
+| [Challenge 5](challenge-5/README.md) | Secrets Scanner | 20 min | Detect hardcoded secrets, API keys, and credentials |
+| [Challenge 6](challenge-6/README.md) | Structured Output | 15 min | Use response_format with Pydantic models for consistent findings |
+| [Challenge 7](challenge-7/README.md) | Code Vulnerability Scanner | 20 min | Find injection, XSS, SSRF, and unsafe code patterns |
+| [Challenge 8](challenge-8/README.md) | Infrastructure Scanner | 20 min | Scan Docker, Terraform, CI/CD, and dependency configs |
+| [Challenge 9](challenge-9/README.md) | Auth and Crypto Scanner | 20 min | Detect weak hashing, JWT flaws, and deprecated crypto |
 | [Challenge 10](challenge-10/README.md) | Orchestrated Workflow | 30 min | Coordinate all scanners into a scored security workflow |
 
 ## Achievement Tiers

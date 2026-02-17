@@ -1,53 +1,58 @@
-# Challenge 8: Authentication & Cryptography Scanner 🔐
+# Challenge 8: Infrastructure & Dependency Scanner 🏗️
 
 **Duration:** 20 minutes
 
-Authentication weaknesses and cryptographic flaws are critical security issues. This scanner specializes in detecting weak password handling, JWT vulnerabilities, deprecated cryptography, and authentication bypass patterns.
+Vulnerabilities aren't only in application code. They hide in third-party dependencies with known CVEs, Dockerfiles with insecure configurations, CI/CD pipelines missing security checks, and Terraform/IaC files with overly permissive policies.
 
 ## Learning Objectives
 
-- Build a specialized agent for authentication and cryptography analysis
-- Detect weak hashing, insecure JWT patterns, and deprecated crypto algorithms
-- Understand the difference between code-level and auth/crypto vulnerabilities
+- Scan infrastructure-as-code and configuration files for security issues
+- Detect dependency vulnerabilities in `requirements.txt`
+- Identify Docker, CI/CD, and Terraform misconfigurations
 
 ## Vulnerability Categories
 
-| Category | Patterns to Detect |
-|----------|--------------------|
-| **Weak Password Handling** | MD5/SHA1 without salt, timing-vulnerable comparisons (`==` instead of `hmac.compare_digest`) |
-| **JWT Issues** | `none` algorithm allowed, excessively long expiry, weak signing secrets |
-| **Deprecated Crypto** | DES encryption, ECB mode, hardcoded IV reuse, SHA1 for sensitive data |
-| **Auth Bypass** | Predictable random seeds, no auth on admin endpoints, missing CSRF |
+| Category | Files to Check | Patterns |
+|----------|---------------|----------|
+| **Dependency CVEs** | `requirements.txt` | Outdated packages with known vulnerabilities |
+| **Docker** | `Dockerfile`, `docker-compose.yml` | Running as root, no health checks, exposed ports |
+| **CI/CD** | `.github/workflows/` | Secrets in workflows, missing security scanning |
+| **Terraform/IaC** | `*.tf`, `deploy/` | Public S3 buckets, overly permissive IAM |
+| **App Config** | Various | Debug mode enabled, permissive CORS, verbose errors |
 
 ## Step-by-Step Instructions
 
 ### What You Need to Build
 
-An `auth_crypto_scanner` agent that:
-- Focuses on `auth.py`, `utils/crypto.py`, and related authentication/crypto files
-- Identifies weak hashing, insecure JWT usage, deprecated cryptography
+An `infra_scanner` agent that:
+- Scans dependency files, Dockerfiles, CI/CD configs, and IaC files
+- Identifies misconfigurations and known vulnerability patterns
 - Calls `report_vulnerability()` for EACH finding
 - Calls `mark_file_scanned()` after analyzing each file
 - Uses `response_format=VulnerabilityList` and `context_providers=[scan_memory]`
 
-> **Note**: Each vulnerability is self-contained within its file. No cross-file correlation is needed.
+### Think About
+
+- Which files should this agent prioritize?
+- Should it try to identify specific CVE IDs for dependency issues?
+- Don't forget subdirectories like `deploy/`, `.github/workflows/`
 
 ### Exports
 
 | Variable | Type | Description |
 |----------|------|-------------|
-| `auth_crypto_scanner` | `Agent` | Agent that detects auth & crypto issues |
+| `infra_scanner` | `Agent` | Agent that scans dependencies, Docker, CI/CD, and IaC |
 
 ## Testing
 
 ```bash
 cd workshop/challenge-8
-python challenge_08_auth_crypto_scanner.py
+python challenge_08_infra_scanner.py
 ```
 
-**Expected output**: The scanner finds weak hashing, JWT issues, and deprecated crypto patterns.
+**Expected output**: The scanner finds dependency vulnerabilities, Docker misconfigurations, and IaC issues.
 
 ## Resources
 
-- **Challenge file**: [`challenge_08_auth_crypto_scanner.py`](./challenge_08_auth_crypto_scanner.py)
+- **Challenge file**: [`challenge_08_infra_scanner.py`](./challenge_08_infra_scanner.py)
 - **Security guide**: [`SECURITY_GUIDE.md`](../SECURITY_GUIDE.md)

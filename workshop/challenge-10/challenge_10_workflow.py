@@ -59,11 +59,11 @@ chat_client_mcp = create_mcp_client()
 from challenge_01_repo_access import github_mcp_tool, repo_explorer
 from challenge_02_file_tools import read_repo_file, list_repo_files
 from challenge_03_memory import scan_memory, report_vulnerability, mark_file_scanned
-from challenge_04_secrets_scanner import secrets_scanner
-from challenge_06_code_scanner import code_vuln_scanner
-from challenge_07_infra_scanner import infra_scanner
-from challenge_08_auth_crypto_scanner import auth_crypto_scanner
-from challenge_09_middleware import agent_logging_middleware, tool_logging_middleware
+from challenge_04_middleware import agent_logging_middleware, tool_logging_middleware
+from challenge_05_secrets_scanner import secrets_scanner
+from challenge_07_code_scanner import code_vuln_scanner
+from challenge_08_infra_scanner import infra_scanner
+from challenge_09_auth_crypto_scanner import auth_crypto_scanner
 
 
 # ═════════════════════════════════════════════════════════════════════
@@ -117,12 +117,12 @@ FINAL_ANSWER_PROMPT = None  # Replace with your implementation
 # TODO 3: Build your orchestrated security_workflow
 #
 # You have these components from previous challenges:
-#   - secrets_scanner       (from challenge 04)
-#   - code_vuln_scanner     (from challenge 06)
-#   - infra_scanner         (from challenge 07)
-#   - auth_crypto_scanner   (from challenge 08)
+#   - secrets_scanner       (from challenge 05)
+#   - code_vuln_scanner     (from challenge 07)
+#   - infra_scanner         (from challenge 08)
+#   - auth_crypto_scanner   (from challenge 09)
 #   - scan_memory           (from challenge 03)
-#   - agent/tool middleware (from challenge 09)
+#   - agent/tool middleware (from challenge 04)
 #
 # Choose a Builder pattern:
 #

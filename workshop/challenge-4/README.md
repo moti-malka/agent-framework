@@ -1,60 +1,86 @@
-# Challenge 4: Secrets Scanner Agent 🔑
+# Challenge 4: Observability Middleware 📡
 
-**Duration:** 20 minutes
+**Duration:** 15 minutes
 
-Hardcoded secrets are one of the most common and dangerous vulnerabilities. API keys, passwords, and tokens committed to source code can be exploited by anyone with access to the repository.
+In production, you need visibility into what your scanning agents are doing: which files they're reading, which tools they're calling, how long each scan takes, and what errors occur. Middleware provides this audit trail.
 
 ## Learning Objectives
 
-- Build a specialized security scanning agent with domain-specific instructions
-- Use tools and context providers together in an agent
-- Detect hardcoded secrets, API keys, passwords, tokens, and credentials
+- Build middleware that wraps agent execution with logging
+- Build middleware that wraps individual tool/function calls
+- Understand the `AgentContext` and `FunctionInvocationContext` patterns
+- Use `@agent_middleware` and `@function_middleware` decorators
 
-## What Your Scanner Should Find
+## Key Concepts
 
-| Secret Type | Examples |
-|-------------|----------|
-| **API Keys** | AWS keys, Azure keys, third-party API tokens |
-| **Database Credentials** | Connection strings, passwords in config |
-| **Encryption Keys** | Hardcoded symmetric keys, key material in source |
-| **Tokens** | JWT secrets, OAuth tokens, session secrets |
-| **Environment Leaks** | `.env` files with real credentials committed |
+### Agent Framework Middleware
+
+Middleware wraps execution at two levels:
+
+```
+┌─────────────────────────────────────────┐
+│  agent_logging_middleware               │
+│  ┌───────────────────────────────────┐  │
+│  │  Agent Processing                 │  │
+│  │  ┌─────────────────────────────┐  │  │
+│  │  │ tool_logging_middleware     │  │  │
+│  │  │  ┌───────────────────────┐  │  │  │
+│  │  │  │ Tool Execution       │  │  │  │
+│  │  │  └───────────────────────┘  │  │  │
+│  │  └─────────────────────────────┘  │  │
+│  └───────────────────────────────────┘  │
+└─────────────────────────────────────────┘
+```
+
+- **Agent middleware**: Wraps the entire agent run (start → finish)
+- **Tool middleware**: Wraps each individual tool/function call
 
 ## Step-by-Step Instructions
 
 ### What You Need to Build
 
-A `secrets_scanner` agent that:
-- Reads source code files from the repository
-- Identifies hardcoded secrets and credentials
-- Calls `report_vulnerability()` for EACH finding
-- Calls `mark_file_scanned()` after analyzing each file
-- Uses `context_providers=[scan_memory]` to avoid duplicate work
+1. **`agent_logging_middleware`** — Logs agent start (with message count), times execution, logs completion (with duration)
+2. **`tool_logging_middleware`** — Logs which tool is called, its arguments, and the result (truncated if long)
 
-### Think About
+### Middleware Signatures
 
-- What tools does this agent need? (file tools + memory tools)
-- What instructions would guide it to recognize different types of secrets?
-- Which files are most likely to contain secrets?
+Middleware functions must be decorated with the appropriate decorator:
 
-> **Note**: Every secret is self-contained in its own file — no cross-file correlation is needed.
+```python
+@agent_middleware
+async def agent_logging_middleware(
+    context: AgentContext,
+    call_next: Callable[[], Awaitable[None]],
+) -> None:
+    # Log start, call await call_next(), log end
+    # NOTE: call_next() takes NO arguments for agent middleware
+
+@function_middleware
+async def tool_logging_middleware(
+    context: FunctionInvocationContext,
+    next: Callable[[FunctionInvocationContext], Awaitable[None]],
+) -> None:
+    # Log tool name + args, call await next(context), log result
+    # NOTE: next() DOES take context for function middleware
+```
 
 ### Exports
 
 | Variable | Type | Description |
 |----------|------|-------------|
-| `secrets_scanner` | `Agent` | Agent that detects hardcoded secrets |
+| `agent_logging_middleware` | Middleware function | Logs agent execution lifecycle |
+| `tool_logging_middleware` | Middleware function | Logs individual tool invocations |
 
 ## Testing
 
 ```bash
 cd workshop/challenge-4
-python challenge_04_secrets_scanner.py
+python challenge_04_middleware.py
 ```
 
-**Expected output**: The scanner finds multiple hardcoded secrets across repository files.
+**Expected output**: Detailed logs showing agent activation, tool calls with arguments, and execution timing.
 
 ## Resources
 
-- **Challenge file**: [`challenge_04_secrets_scanner.py`](./challenge_04_secrets_scanner.py)
-- **Security guide**: [`SECURITY_GUIDE.md`](../SECURITY_GUIDE.md)
+- **Challenge file**: [`challenge_04_middleware.py`](./challenge_04_middleware.py)
+- **Agent Framework Docs**: [aka.ms/agent-framework](https://aka.ms/agent-framework)

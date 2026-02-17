@@ -1,56 +1,61 @@
-# Challenge 6: Code Vulnerability Scanner 🐛
+# Challenge 6: Structured Vulnerability Output 📊
 
-**Duration:** 20 minutes
+**Duration:** 15 minutes
 
-Secrets are just one category. Applications also have **code-level vulnerabilities**: SQL injection, command injection, XSS, SSRF, insecure deserialization, path traversal, and more. In this challenge, you'll build a dedicated scanner for these patterns.
+Free-text scan results are useful but hard to compare and aggregate. Using `response_format`, you can force an agent to produce structured JSON output that matches a Pydantic model — making findings machine-readable.
 
 ## Learning Objectives
 
-- Build a domain-specific agent for code vulnerability detection
-- Craft instructions that guide the agent to recognize injection flaws and unsafe patterns
-- Produce structured output while reporting findings to shared memory
+- Use `response_format` to enforce structured agent output
+- Combine structured output with memory-based tracking
+- Understand the `Vulnerability` and `VulnerabilityList` Pydantic models
 
-## Vulnerability Categories
+## Key Concept: Dual Output
 
-| Category | Patterns to Detect |
-|----------|--------------------|
-| **SQL Injection** | String concatenation in queries, unsanitized user input |
-| **Command Injection** | `os.system()`, `subprocess` with `shell=True` |
-| **XSS** | Unescaped user input in HTML responses |
-| **SSRF** | User-controlled URLs in server-side requests |
-| **Insecure Deserialization** | `pickle.loads()`, `yaml.load()` without `SafeLoader` |
-| **Path Traversal** | Unsanitized file paths from user input |
-| **XXE** | XML parsing without entity restrictions |
-| **Eval/Exec** | `eval()` or `exec()` with user-controlled input |
+Your agent should produce output through **two channels**:
+
+```
+Agent Scan
+  ├── Channel 1: report_vulnerability()  → stored in ScanMemory
+  └── Channel 2: response_format=VulnerabilityList  → structured JSON output
+```
+
+Both are important:
+- **Memory** is used for scoring in Challenge 10
+- **Structured output** is used for display, logging, and downstream processing
 
 ## Step-by-Step Instructions
 
 ### What You Need to Build
 
-A `code_vuln_scanner` agent that:
-- Reads Python source files from the repository
-- Identifies code-level security vulnerabilities
-- Calls `report_vulnerability()` for EACH finding
-- Calls `mark_file_scanned()` after analyzing each file
-- Uses `response_format=VulnerabilityList` and `context_providers=[scan_memory]`
+A `structured_scanner` agent that:
+- Scans for secrets (same domain as Challenge 5)
+- Calls `report_vulnerability()` for each finding (→ memory)
+- Produces a final `VulnerabilityList` JSON response via `response_format`
+- Uses `context_providers=[scan_memory]`
+
+### Think About
+
+- How do you set `response_format` on an `Agent`?
+- Should the instructions tell the agent to produce JSON in a specific shape?
+- How does this differ from Challenge 5's free-text scanner?
 
 ### Exports
 
 | Variable | Type | Description |
 |----------|------|-------------|
-| `code_vuln_scanner` | `Agent` | Agent that detects code vulnerabilities |
+| `structured_scanner` | `Agent` | Agent with structured `VulnerabilityList` output |
 
 ## Testing
 
 ```bash
 cd workshop/challenge-6
-python challenge_06_code_scanner.py
+python challenge_06_structured_output.py
 ```
 
-**Expected output**: The scanner finds injection flaws, unsafe function usage, and other code-level issues.
+**Expected output**: Parseable `VulnerabilityList` JSON with vulnerability file paths, line numbers, and descriptions.
 
 ## Resources
 
-- **Challenge file**: [`challenge_06_code_scanner.py`](./challenge_06_code_scanner.py)
-- **Security guide**: [`SECURITY_GUIDE.md`](../SECURITY_GUIDE.md)
-- **OWASP Top 10**: [owasp.org/www-project-top-ten](https://owasp.org/www-project-top-ten/)
+- **Challenge file**: [`challenges/challenge_06_structured_output.py`](../challenges/challenge_06_structured_output.py)
+- **Pydantic Models**: Defined in [`challenges/shared_models.py`](../challenges/shared_models.py)

@@ -1,86 +1,53 @@
-# Challenge 9: Observability Middleware 📡
+# Challenge 9: Authentication & Cryptography Scanner 🔐
 
-**Duration:** 15 minutes
+**Duration:** 20 minutes
 
-In production, you need visibility into what your scanning agents are doing: which files they're reading, which tools they're calling, how long each scan takes, and what errors occur. Middleware provides this audit trail.
+Authentication weaknesses and cryptographic flaws are critical security issues. This scanner specializes in detecting weak password handling, JWT vulnerabilities, deprecated cryptography, and authentication bypass patterns.
 
 ## Learning Objectives
 
-- Build middleware that wraps agent execution with logging
-- Build middleware that wraps individual tool/function calls
-- Understand the `AgentContext` and `FunctionInvocationContext` patterns
-- Use `@agent_middleware` and `@function_middleware` decorators
+- Build a specialized agent for authentication and cryptography analysis
+- Detect weak hashing, insecure JWT patterns, and deprecated crypto algorithms
+- Understand the difference between code-level and auth/crypto vulnerabilities
 
-## Key Concepts
+## Vulnerability Categories
 
-### Agent Framework Middleware
-
-Middleware wraps execution at two levels:
-
-```
-┌─────────────────────────────────────────┐
-│  agent_logging_middleware               │
-│  ┌───────────────────────────────────┐  │
-│  │  Agent Processing                 │  │
-│  │  ┌─────────────────────────────┐  │  │
-│  │  │ tool_logging_middleware     │  │  │
-│  │  │  ┌───────────────────────┐  │  │  │
-│  │  │  │ Tool Execution       │  │  │  │
-│  │  │  └───────────────────────┘  │  │  │
-│  │  └─────────────────────────────┘  │  │
-│  └───────────────────────────────────┘  │
-└─────────────────────────────────────────┘
-```
-
-- **Agent middleware**: Wraps the entire agent run (start → finish)
-- **Tool middleware**: Wraps each individual tool/function call
+| Category | Patterns to Detect |
+|----------|--------------------|
+| **Weak Password Handling** | MD5/SHA1 without salt, timing-vulnerable comparisons (`==` instead of `hmac.compare_digest`) |
+| **JWT Issues** | `none` algorithm allowed, excessively long expiry, weak signing secrets |
+| **Deprecated Crypto** | DES encryption, ECB mode, hardcoded IV reuse, SHA1 for sensitive data |
+| **Auth Bypass** | Predictable random seeds, no auth on admin endpoints, missing CSRF |
 
 ## Step-by-Step Instructions
 
 ### What You Need to Build
 
-1. **`agent_logging_middleware`** — Logs agent start (with message count), times execution, logs completion (with duration)
-2. **`tool_logging_middleware`** — Logs which tool is called, its arguments, and the result (truncated if long)
+An `auth_crypto_scanner` agent that:
+- Focuses on `auth.py`, `utils/crypto.py`, and related authentication/crypto files
+- Identifies weak hashing, insecure JWT usage, deprecated cryptography
+- Calls `report_vulnerability()` for EACH finding
+- Calls `mark_file_scanned()` after analyzing each file
+- Uses `response_format=VulnerabilityList` and `context_providers=[scan_memory]`
 
-### Middleware Signatures
-
-Middleware functions must be decorated with the appropriate decorator:
-
-```python
-@agent_middleware
-async def agent_logging_middleware(
-    context: AgentContext,
-    call_next: Callable[[], Awaitable[None]],
-) -> None:
-    # Log start, call await call_next(), log end
-    # NOTE: call_next() takes NO arguments for agent middleware
-
-@function_middleware
-async def tool_logging_middleware(
-    context: FunctionInvocationContext,
-    next: Callable[[FunctionInvocationContext], Awaitable[None]],
-) -> None:
-    # Log tool name + args, call await next(context), log result
-    # NOTE: next() DOES take context for function middleware
-```
+> **Note**: Each vulnerability is self-contained within its file. No cross-file correlation is needed.
 
 ### Exports
 
 | Variable | Type | Description |
 |----------|------|-------------|
-| `agent_logging_middleware` | Middleware function | Logs agent execution lifecycle |
-| `tool_logging_middleware` | Middleware function | Logs individual tool invocations |
+| `auth_crypto_scanner` | `Agent` | Agent that detects auth & crypto issues |
 
 ## Testing
 
 ```bash
 cd workshop/challenge-9
-python challenge_09_middleware.py
+python challenge_09_auth_crypto_scanner.py
 ```
 
-**Expected output**: Detailed logs showing agent activation, tool calls with arguments, and execution timing.
+**Expected output**: The scanner finds weak hashing, JWT issues, and deprecated crypto patterns.
 
 ## Resources
 
-- **Challenge file**: [`challenge_09_middleware.py`](./challenge_09_middleware.py)
-- **Agent Framework Docs**: [aka.ms/agent-framework](https://aka.ms/agent-framework)
+- **Challenge file**: [`challenge_09_auth_crypto_scanner.py`](./challenge_09_auth_crypto_scanner.py)
+- **Security guide**: [`SECURITY_GUIDE.md`](../SECURITY_GUIDE.md)

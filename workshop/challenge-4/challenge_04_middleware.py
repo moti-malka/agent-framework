@@ -1,5 +1,5 @@
 """
-Challenge 09 — Observability Middleware
+Challenge 04 — Observability Middleware
 =======================================
 In production, you need visibility into what your scanning agents
 are doing: which files they're reading, which tools they're calling,
@@ -103,7 +103,7 @@ tool_logging_middleware = None  # Replace with your implementation
 
 
 # ─── Test (DO NOT MODIFY) ────────────────────────────────────────────
-async def test_challenge_09():
+async def test_challenge_04():
     assert agent_logging_middleware is not None, "agent_logging_middleware is not set"
     assert tool_logging_middleware is not None, "tool_logging_middleware is not set"
 
@@ -120,7 +120,7 @@ async def test_challenge_09():
         f"List the files in {GITHUB_REPO} and then read the contents of app.py"
     )
     print(f"\n📝 Agent response: {result.text[:200]}...")
-    print("\n✅ Challenge 09 complete — observability middleware working!")
+    print("\n✅ Challenge 04 complete — observability middleware working!")
 
 if __name__ == "__main__":
-    asyncio.run(test_challenge_09())
+    asyncio.run(test_challenge_04())

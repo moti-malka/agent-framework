@@ -1,5 +1,5 @@
 """
-Challenge 08 — Authentication & Cryptography Scanner
+Challenge 09 — Authentication & Cryptography Scanner
 =====================================================
 Authentication weaknesses and cryptographic flaws are critical:
   - Weak password hashing (MD5, SHA1 without salt)
@@ -87,7 +87,7 @@ auth_crypto_scanner = None  # Replace with your implementation
 
 
 # ─── Test (DO NOT MODIFY) ────────────────────────────────────────────
-async def test_challenge_08():
+async def test_challenge_09():
     assert auth_crypto_scanner is not None, "auth_crypto_scanner is not set"
 
     scan_memory.reset()
@@ -110,7 +110,7 @@ async def test_challenge_08():
     print(f"\n🧠 Memory: {len(scan_memory.vulnerabilities)} vulnerabilities")
 
     assert len(scan_memory.vulnerabilities) > 0, "Should find at least one auth/crypto issue"
-    print("\n✅ Challenge 08 complete — auth/crypto scanner operational!")
+    print("\n✅ Challenge 09 complete — auth/crypto scanner operational!")
 
 if __name__ == "__main__":
-    asyncio.run(test_challenge_08())
+    asyncio.run(test_challenge_09())

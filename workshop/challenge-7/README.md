@@ -1,58 +1,56 @@
-# Challenge 7: Infrastructure & Dependency Scanner 🏗️
+# Challenge 7: Code Vulnerability Scanner 🐛
 
 **Duration:** 20 minutes
 
-Vulnerabilities aren't only in application code. They hide in third-party dependencies with known CVEs, Dockerfiles with insecure configurations, CI/CD pipelines missing security checks, and Terraform/IaC files with overly permissive policies.
+Secrets are just one category. Applications also have **code-level vulnerabilities**: SQL injection, command injection, XSS, SSRF, insecure deserialization, path traversal, and more. In this challenge, you'll build a dedicated scanner for these patterns.
 
 ## Learning Objectives
 
-- Scan infrastructure-as-code and configuration files for security issues
-- Detect dependency vulnerabilities in `requirements.txt`
-- Identify Docker, CI/CD, and Terraform misconfigurations
+- Build a domain-specific agent for code vulnerability detection
+- Craft instructions that guide the agent to recognize injection flaws and unsafe patterns
+- Produce structured output while reporting findings to shared memory
 
 ## Vulnerability Categories
 
-| Category | Files to Check | Patterns |
-|----------|---------------|----------|
-| **Dependency CVEs** | `requirements.txt` | Outdated packages with known vulnerabilities |
-| **Docker** | `Dockerfile`, `docker-compose.yml` | Running as root, no health checks, exposed ports |
-| **CI/CD** | `.github/workflows/` | Secrets in workflows, missing security scanning |
-| **Terraform/IaC** | `*.tf`, `deploy/` | Public S3 buckets, overly permissive IAM |
-| **App Config** | Various | Debug mode enabled, permissive CORS, verbose errors |
+| Category | Patterns to Detect |
+|----------|--------------------|
+| **SQL Injection** | String concatenation in queries, unsanitized user input |
+| **Command Injection** | `os.system()`, `subprocess` with `shell=True` |
+| **XSS** | Unescaped user input in HTML responses |
+| **SSRF** | User-controlled URLs in server-side requests |
+| **Insecure Deserialization** | `pickle.loads()`, `yaml.load()` without `SafeLoader` |
+| **Path Traversal** | Unsanitized file paths from user input |
+| **XXE** | XML parsing without entity restrictions |
+| **Eval/Exec** | `eval()` or `exec()` with user-controlled input |
 
 ## Step-by-Step Instructions
 
 ### What You Need to Build
 
-An `infra_scanner` agent that:
-- Scans dependency files, Dockerfiles, CI/CD configs, and IaC files
-- Identifies misconfigurations and known vulnerability patterns
+A `code_vuln_scanner` agent that:
+- Reads Python source files from the repository
+- Identifies code-level security vulnerabilities
 - Calls `report_vulnerability()` for EACH finding
 - Calls `mark_file_scanned()` after analyzing each file
 - Uses `response_format=VulnerabilityList` and `context_providers=[scan_memory]`
-
-### Think About
-
-- Which files should this agent prioritize?
-- Should it try to identify specific CVE IDs for dependency issues?
-- Don't forget subdirectories like `deploy/`, `.github/workflows/`
 
 ### Exports
 
 | Variable | Type | Description |
 |----------|------|-------------|
-| `infra_scanner` | `Agent` | Agent that scans dependencies, Docker, CI/CD, and IaC |
+| `code_vuln_scanner` | `Agent` | Agent that detects code vulnerabilities |
 
 ## Testing
 
 ```bash
 cd workshop/challenge-7
-python challenge_07_infra_scanner.py
+python challenge_07_code_scanner.py
 ```
 
-**Expected output**: The scanner finds dependency vulnerabilities, Docker misconfigurations, and IaC issues.
+**Expected output**: The scanner finds injection flaws, unsafe function usage, and other code-level issues.
 
 ## Resources
 
-- **Challenge file**: [`challenge_07_infra_scanner.py`](./challenge_07_infra_scanner.py)
+- **Challenge file**: [`challenge_07_code_scanner.py`](./challenge_07_code_scanner.py)
 - **Security guide**: [`SECURITY_GUIDE.md`](../SECURITY_GUIDE.md)
+- **OWASP Top 10**: [owasp.org/www-project-top-ten](https://owasp.org/www-project-top-ten/)

@@ -1,5 +1,5 @@
 """
-Challenge 04 — Secrets Scanner Agent
+Challenge 05 — Secrets Scanner Agent
 =====================================
 Hardcoded secrets are one of the most common and dangerous vulnerabilities.
 API keys, passwords, and tokens committed to source code can be exploited
@@ -69,7 +69,7 @@ secrets_scanner = None  # Replace with your implementation
 
 
 # ─── Test (DO NOT MODIFY) ────────────────────────────────────────────
-async def test_challenge_04():
+async def test_challenge_05():
     assert secrets_scanner is not None, "secrets_scanner is not set"
 
     scan_memory.reset()
@@ -92,7 +92,7 @@ async def test_challenge_04():
     for v in scan_memory.vulnerabilities[:5]:
         print(f"   📌 {v['file']}:{v['start_line']}-{v['end_line']} — {v['description'][:60]}")
 
-    print("\n✅ Challenge 04 complete — secrets scanner is operational!")
+    print("\n✅ Challenge 05 complete — secrets scanner is operational!")
 
 if __name__ == "__main__":
-    asyncio.run(test_challenge_04())
+    asyncio.run(test_challenge_05())
