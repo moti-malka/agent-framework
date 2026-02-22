@@ -37,6 +37,9 @@ A Magentic orchestration demo featuring collaborative AI agents:
 2. ✅ **Azure OpenAI resource** with a deployed model (e.g., `gpt-4o-mini`)
 3. ✅ **Azure CLI** installed and authenticated (`az login`)
 4. ✅ **Python 3.10+**
+5. ✅ **Azure AI Foundry project** *(Section 7 — MCP Integration only)*
+   - **Project endpoint** — found in your project's **Overview** page
+   - **Model deployment name** — found in your project's **Models + endpoints** page
 
 ### Setup
 
@@ -143,7 +146,7 @@ agent-framework/
 Create a `.env` file in the project root with the following variables:
 
 ```bash
-# Required: Azure OpenAI Configuration
+# Required: Azure OpenAI Configuration (Sections 1–16)
 AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com/
 AZURE_OPENAI_CHAT_DEPLOYMENT_NAME=gpt-4o-mini
 
@@ -152,6 +155,12 @@ AZURE_OPENAI_API_KEY=your-api-key
 
 # Optional: API Version (defaults to 2025-01-01-preview)
 API_VERSION=2025-01-01-preview
+
+# Required for Section 7 only (MCP Integration)
+# AZURE_AI_PROJECT_ENDPOINT: Azure AI Foundry → your project → Overview → Project endpoint
+AZURE_AI_PROJECT_ENDPOINT=https://<resource>.services.ai.azure.com/api/projects/<project>
+# AZURE_AI_MODEL_DEPLOYMENT_NAME: Azure AI Foundry → your project → Models + endpoints → Deployment name
+AZURE_AI_MODEL_DEPLOYMENT_NAME=gpt-4o-mini
 ```
 
 **Authentication Options:**
