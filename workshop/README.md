@@ -74,16 +74,27 @@ python challenge_01_repo_access.py
 | [Challenge 9](challenge-9/README.md) | Auth and Crypto Scanner | 20 min | Detect weak hashing, JWT flaws, and deprecated crypto |
 | [Challenge 10](challenge-10/README.md) | Orchestrated Workflow | 30 min | Coordinate all scanners into a scored security workflow |
 
-## Achievement Tiers
+## 🛡️ VULN-HUNT Competition Dashboard
 
-Your final score is based on how many catalog vulnerabilities your agents detect:
+Once you've completed Challenge 10, put your scan to the test in the **live competition**!
 
-| Tier | Coverage | Badge |
-|------|----------|-------|
-| **Diamond** | 90%+ | 💎 |
-| **Gold** | 75–89% | 🥇 |
-| **Silver** | 50–74% | 🥈 |
-| **Bronze** | 25–49% | 🥉 |
+### How to Play
+
+1. **Open the link** your instructor shares (e.g. `https://vulnhunt-dashboard.azurewebsites.net`)
+2. **Enter the session code** provided by the instructor
+3. **Pick a team name** and choose an avatar
+4. **Click JOIN GAME** — you'll enter the lobby and wait for the competition to start
+5. Once started, **upload your Challenge 10 output** (`.json`) using the upload area
+6. Your scan is scored automatically against the vulnerability catalog — the leaderboard updates in real-time
+7. You can **re-upload** as many times as you want to improve your score
+8. When the competition ends, a **podium screen** shows the top 3 teams
+
+### Tips
+
+- If you get disconnected, just rejoin with the **same team name** — your score is preserved
+- Each upload replaces your previous score, so keep improving your scan
+- Watch the leaderboard and severity charts to track progress
+- The goal: find as many of the **security vulnerabilities** as possible!
 
 ## Key References
 
