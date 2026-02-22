@@ -4,7 +4,7 @@ A comprehensive collection of learning resources for building AI-powered systems
 
 ## 🎯 What's Included
 
-This repository contains two main learning resources:
+This repository contains three main learning resources:
 
 ### 1. **Support Email Copilot** (Jupyter Notebook)
 An interactive tutorial that progressively teaches framework capabilities:
@@ -29,10 +29,21 @@ A Magentic orchestration demo featuring collaborative AI agents:
 - ⚡ **Streaming Output** - See agent discussions as they happen
 - 🔄 **Human-in-the-Loop** - Optional plan review and approval
 
+### 3. **Security Workshop** (Hands-on Challenges)
+A progressive 10-challenge workshop teaching AI-powered security scanning:
+
+- 🔐 **Build security scanner agents** - Detect secrets, code vulnerabilities, misconfigurations
+- 🔗 **MCP GitHub Integration** - Connect agents to real repositories via Model Context Protocol
+- 🧠 **Shared Memory** - Cross-agent coordination with context providers
+- 📊 **Structured Output** - Consistent findings with Pydantic models
+- 🔄 **Workflow Orchestration** - Coordinate multiple scanners into scored reports
+- 🏆 **VULN-HUNT Competition** - Live leaderboard game with real-time scoring
+
 ## 🚀 Quick Start
 
 ### Prerequisites
 
+**For Notebook & Magentic Examples:**
 1. ✅ **Azure subscription** with access to Azure OpenAI
 2. ✅ **Azure OpenAI resource** with a deployed model (e.g., `gpt-4o-mini`)
 3. ✅ **Azure CLI** installed and authenticated (`az login`)
@@ -40,6 +51,10 @@ A Magentic orchestration demo featuring collaborative AI agents:
 5. ✅ **Azure AI Foundry project** *(Section 7 — MCP Integration only)*
    - **Project endpoint** — found in your project's **Overview** page
    - **Model deployment name** — found in your project's **Models + endpoints** page
+
+**Additional for Security Workshop:**
+6. ✅ **GitHub Personal Access Token** with repo access
+7. ✅ **Azure AI Agent Service** via Service Principal (for MCP integration)
 
 ### Setup
 
@@ -57,11 +72,10 @@ source .venv/bin/activate  # macOS/Linux
 pip install -r requirements.txt
 
 # 4. Configure environment
-# Create a .env file with your Azure OpenAI configuration:
-AZURE_OPENAI_ENDPOINT=https://your-apim-gateway.azure-api.net  # APIM gateway URL
-AZURE_OPENAI_CHAT_DEPLOYMENT_NAME=gpt-4o-mini
-AZURE_OPENAI_API_KEY=your-apim-subscription-key  # APIM subscription key
-API_VERSION=2025-01-01-preview  # Optional, defaults to this value
+# Copy the example file and fill in your values:
+cp .env.example .env
+# Then edit .env with your Azure OpenAI and GitHub credentials
+# See "Environment Variables" section below for details
 
 # 5. Login to Azure (for CLI-based authentication)
 az login
@@ -86,6 +100,19 @@ python magentic_example.py
 # - Select a pre-defined startup idea or enter your own
 # - Watch agents collaborate in real-time
 # - Review the generated discussion log in discussions/ folder
+```
+
+**Option 3: Security Workshop**
+```bash
+# Navigate to workshop directory
+cd workshop
+
+# Start with Challenge 0 for setup
+# Then progress through challenges 1-10
+cd challenge-1
+python challenge_01_repo_access.py
+
+# See workshop/README.md for complete challenge list
 ```
 
 ## 🏗️ Framework Features Demonstrated
@@ -127,41 +154,56 @@ agent-framework/
 ├── agent_framework.ipynb      # Interactive tutorial notebook (12 sections)
 ├── magentic_example.py        # Standalone Magentic orchestration demo
 ├── requirements.txt           # Python dependencies
-├── .env                       # Azure OpenAI configuration (create this)
+├── .env.example               # Environment variable template
+├── .env                       # Your configuration (create from .env.example)
 ├── .venv/                     # Python virtual environment
 ├── images/                    # Architecture and workflow diagrams
-│   ├── agent-components.png
-│   ├── concurrent-workflow.png
-│   ├── group-chat.png
-│   ├── magentic-workflow.png
-│   ├── sequential-workflow.png
-│   ├── threads-and-memory.png
-│   └── workflow-example.png
-├── discussions/               # Created by magentic_example.py at runtime (Markdown logs)
+├── docs/                      # HTML documentation pages
+├── workshop/                  # Security scanning workshop (10 challenges)
+│   ├── README.md              # Workshop overview and challenge list
+│   ├── SECURITY_GUIDE.md      # Vulnerability knowledge base
+│   ├── .env.sample            # Workshop environment template
+│   ├── challenge-0/           # Environment setup
+│   ├── challenge-1/           # MCP repository access
+│   ├── challenge-2/           # File reading tools
+│   ├── challenge-3/           # Scan memory
+│   ├── challenge-4/           # Observability middleware
+│   ├── challenge-5/           # Secrets scanner
+│   ├── challenge-6/           # Structured output
+│   ├── challenge-7/           # Code vulnerability scanner
+│   ├── challenge-8/           # Infrastructure scanner
+│   ├── challenge-9/           # Auth and crypto scanner
+│   ├── challenge-10/          # Orchestrated workflow
+│   └── shared_models.py       # Common Pydantic models
+├── discussions/               # Created by magentic_example.py at runtime
 └── README.md                  # This file
 ```
 
 ## 📝 Environment Variables
 
-Create a `.env` file in the project root with the following variables:
+Create a `.env` file by copying `.env.example`:
 
 ```bash
-# Required: Azure OpenAI Configuration (Sections 1–16)
+cp .env.example .env
+```
+
+**Required variables** (see `.env.example` for complete template):
+
+```bash
+# Azure OpenAI Configuration
 AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com/
 AZURE_OPENAI_CHAT_DEPLOYMENT_NAME=gpt-4o-mini
+AZURE_OPENAI_API_KEY=your-api-key  # Optional if using Azure CLI auth
 
-# Optional: API Key (if not using Azure CLI authentication)
-AZURE_OPENAI_API_KEY=your-api-key
-
-# Optional: API Version (defaults to 2025-01-01-preview)
-API_VERSION=2025-01-01-preview
-
-# Required for Section 7 only (MCP Integration)
-# AZURE_AI_PROJECT_ENDPOINT: Azure AI Foundry → your project → Overview → Project endpoint
+# For MCP Integration (Section 7 / Workshop)
 AZURE_AI_PROJECT_ENDPOINT=https://<resource>.services.ai.azure.com/api/projects/<project>
-# AZURE_AI_MODEL_DEPLOYMENT_NAME: Azure AI Foundry → your project → Models + endpoints → Deployment name
 AZURE_AI_MODEL_DEPLOYMENT_NAME=gpt-4o-mini
 ```
+
+**For Security Workshop** (`workshop/.env.sample`):
+- GitHub Personal Access Token
+- Azure AI Agent Service credentials
+- See `workshop/.env.sample` for complete workshop configuration
 
 **Authentication Options:**
 1. **Azure CLI** (recommended): Run `az login` before starting
@@ -186,6 +228,28 @@ The `agent_framework.ipynb` tutorial is organized into 12 progressive sections:
 | **10** | Fan-Out/Fan-In | Parallel processing |
 | **11** | Multi-Agent Group Chat | Team collaboration |
 | **12** | Capstone Demo | End-to-end system |
+
+## 🔐 Security Workshop
+
+The `workshop/` directory contains a comprehensive hands-on workshop for building AI-powered security scanning systems. Progress through 10 challenges to create specialized scanner agents that detect vulnerabilities in GitHub repositories.
+
+### Workshop Highlights
+
+- **Progressive Learning**: Start with MCP basics, advance to multi-agent orchestration
+- **Real Security Scanning**: Build agents that find secrets, code vulnerabilities, and misconfigurations
+- **Live Competition**: Test your scanners in the VULN-HUNT leaderboard game
+- **Production Patterns**: Learn context providers, middleware, structured outputs, and workflow orchestration
+
+### Challenge Overview
+
+| Challenge | Focus | Key Concepts |
+|-----------|-------|--------------|
+| 0-1 | Setup & MCP | Environment configuration, GitHub repository access |
+| 2-4 | Agent Infrastructure | Custom tools, shared memory, middleware |
+| 5-9 | Security Scanners | Secrets, code vulns, infrastructure, auth/crypto |
+| 10 | Workflow | Sequential orchestration, scoring, aggregation |
+
+**Get Started**: See [workshop/README.md](workshop/README.md) for detailed instructions and challenge descriptions.
 
 ## 📖 Learn More
 
