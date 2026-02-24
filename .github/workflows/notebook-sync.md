@@ -59,14 +59,14 @@ Always check for and add these features if missing:
 - [ ] Memory - ContextProvider for persistent state
 
 ### Advanced Features (MUST ADD if missing)
-- [ ] **Multimodal Input** - Image/audio/video processing (InboxOps: handle customer screenshots, product images)
-- [ ] **Error Handling & Retry** - Graceful degradation, timeout handling (InboxOps: handle API failures)
-- [ ] **Checkpointing** - Workflow state persistence (InboxOps: resume interrupted batch processing)
-- [ ] **Evaluation & Testing** - Agent quality measurement (InboxOps: measure response accuracy)
-- [ ] **MCP Integration** - Model Context Protocol for external tools (InboxOps: integrate with Zendesk, Salesforce)
-- [ ] **Structured Output** - JSON/Pydantic response schemas (InboxOps: structured ticket data)
-- [ ] **Rate Limiting** - Token bucket, request throttling (InboxOps: handle high email volume)
-- [ ] **Caching** - Response caching for efficiency (InboxOps: cache common responses)
+- [ ] **Multimodal Input** - Image/audio/video processing (DropGo: handle customer screenshots, product images)
+- [ ] **Error Handling & Retry** - Graceful degradation, timeout handling (DropGo: handle API failures)
+- [ ] **Checkpointing** - Workflow state persistence (DropGo: resume interrupted batch processing)
+- [ ] **Evaluation & Testing** - Agent quality measurement (DropGo: measure response accuracy)
+- [ ] **MCP Integration** - Model Context Protocol for external tools (DropGo: integrate with Zendesk, Salesforce)
+- [ ] **Structured Output** - JSON/Pydantic response schemas (DropGo: structured ticket data)
+- [ ] **Rate Limiting** - Token bucket, request throttling (DropGo: handle high email volume)
+- [ ] **Caching** - Response caching for efficiency (DropGo: cache common responses)
 
 ### Workflow Patterns (Must Have)
 - [ ] Sequential Pipeline - Chained agent execution
@@ -101,7 +101,7 @@ Use DeepWiki MCP to ask questions about the framework if needed.
 ### Step 2: Read the Current Notebook
 
 Read the entire `agent_framework.ipynb` file to understand:
-- The current **InboxOps story narrative** (e-commerce support email company)
+- The current **DropGo story narrative** (e-commerce support email company)
 - The progression: V0 (basic) → V1 (memory) → V2 (tools) → Production Workflows
 - Which features are already covered
 - The teaching style and code patterns
@@ -116,10 +116,10 @@ For EVERY feature in the docs, mark as:
 
 ### Step 4: Plan Story-Integrated Updates
 
-For each missing feature, plan WHERE in the InboxOps story it fits:
+For each missing feature, plan WHERE in the DropGo story it fits:
 
 **Integration Guidelines:**
-| Feature | Story Integration Point | InboxOps Scenario |
+| Feature | Story Integration Point | DropGo Scenario |
 |---------|------------------------|-------------------|
 | Multimodal | After Tools (V1.5) | "Customers send screenshots of errors" |
 | Error Handling | After Middleware (V2.1) | "Handling API outages gracefully" |
@@ -132,7 +132,7 @@ For each missing feature, plan WHERE in the InboxOps story it fits:
 **RULES:**
 1. **DO NOT** just append at the end
 2. **DO** insert at the logical story point
-3. **MAINTAIN** the InboxOps narrative voice
+3. **MAINTAIN** the DropGo narrative voice
 4. **ADD** both markdown explanations AND runnable code examples
 
 ### Step 5: Make ALL Updates
@@ -140,18 +140,18 @@ For each missing feature, plan WHERE in the InboxOps story it fits:
 For EVERY missing feature:
 1. Edit `agent_framework.ipynb`
 2. Insert new cells at the **correct story location**
-3. Add markdown cell explaining the feature in InboxOps context
+3. Add markdown cell explaining the feature in DropGo context
 4. Add Python code cell with working example
-5. Ensure the code uses InboxOps scenarios (emails, customers, tickets)
+5. Ensure the code uses DropGo scenarios (emails, customers, tickets)
 
 **Example addition for Multimodal:**
 ```markdown
-## 🖼️ V1.5: InboxOps Adds Image Understanding
+## 🖼️ V1.5: DropGo Adds Image Understanding
 
 The support team noticed a spike in tickets with attached screenshots. 
 "Can you see what's wrong?" customers would ask, attaching photos of error messages or damaged products.
 
-Time for InboxOps to develop eyes! With multimodal input support, the agent can now 
+Time for DropGo to develop eyes! With multimodal input support, the agent can now 
 analyze images alongside text, providing faster resolution for visual issues.
 ```
 
@@ -169,7 +169,7 @@ analyze images alongside text, providing faster resolution for visual issues.
   - [ ] Feature 2: Added at Section X (cell Y)
   
   ### Integration Points
-  | Feature | Section | InboxOps Story |
+  | Feature | Section | DropGo Story |
   |---------|---------|----------------|
   | ... | ... | ... |
   
@@ -179,7 +179,7 @@ analyze images alongside text, providing faster resolution for visual issues.
   
   ### Quality Checks
   - [x] All code examples are runnable
-  - [x] InboxOps narrative maintained
+  - [x] DropGo narrative maintained
   - [x] Proper cell placement (not at end)
   ```
 
@@ -190,7 +190,7 @@ analyze images alongside text, providing faster resolution for visual issues.
 Before creating the PR:
 - [ ] **ALL** missing features from docs have been added
 - [ ] Each feature has BOTH markdown explanation AND code example
-- [ ] All code uses InboxOps scenarios
+- [ ] All code uses DropGo scenarios
 - [ ] Cells are placed at logical story points, NOT appended at end
 - [ ] Markdown formatting matches existing style
 - [ ] Code is runnable and follows existing patterns

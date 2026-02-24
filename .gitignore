@@ -88,3 +88,4 @@ env/
 .venv/
 .github/aw/actions-lock.json
 workshop/challenge_10_output.json
+QR-WS.png
