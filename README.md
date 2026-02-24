@@ -1,12 +1,10 @@
 # 📧 Microsoft Agent Framework — Learning Examples
 
-A comprehensive collection of learning resources for building AI-powered systems using the **Microsoft Agent Framework**. This repository includes both an interactive Jupyter notebook tutorial and standalone Python examples demonstrating advanced orchestration patterns.
+A comprehensive collection of learning resources for building AI-powered systems using the **Microsoft Agent Framework**. This repository includes an interactive Jupyter notebook tutorial demonstrating advanced orchestration patterns.
 
 ## 🎯 What's Included
 
-This repository contains two main learning resources:
-
-### 1. **Support Email Copilot** (Jupyter Notebook)
+### **Support Email Copilot** (Jupyter Notebook)
 An interactive tutorial that progressively teaches framework capabilities:
 
 - ✅ **Classifies** incoming emails (Spam / Not Spam / Uncertain)
@@ -17,17 +15,6 @@ An interactive tutorial that progressively teaches framework capabilities:
 - ✅ **Processes in parallel** for long emails (response + summary)
 - ✅ **Uses multiple reviewers** for quality control (security, tone, accuracy)
 - ✅ **Logs** every operation for observability
-
-### 2. **Startup Idea Analyzer** (Standalone Python Script)
-A Magentic orchestration demo featuring collaborative AI agents:
-
-- 🔍 **Market Researcher** - Pessimistic analyst focused on risks
-- 💰 **Financial Analyst** - Optimistic view on revenue potential
-- ⚙️ **Tech Advisor** - Skeptical technical feasibility assessor
-- 🎯 **Magentic Manager** - Coordinates the team and balances perspectives
-- 📄 **Live Logging** - Real-time Markdown discussion logs
-- ⚡ **Streaming Output** - See agent discussions as they happen
-- 🔄 **Human-in-the-Loop** - Optional plan review and approval
 
 ## 🚀 Quick Start
 
@@ -69,23 +56,10 @@ az login
 
 ### Running the Examples
 
-**Option 1: Jupyter Notebook Tutorial**
 ```bash
 # Open the notebook
 jupyter notebook agent_framework.ipynb
 # Or open in VS Code with Jupyter extension
-```
-
-**Option 2: Standalone Magentic Demo**
-```bash
-# Run the startup analyzer
-python magentic_example.py
-
-# Follow the interactive prompts to:
-# - Choose streaming or human-in-the-loop mode
-# - Select a pre-defined startup idea or enter your own
-# - Watch agents collaborate in real-time
-# - Review the generated discussion log in discussions/ folder
 ```
 
 ## 🏗️ Framework Features Demonstrated
@@ -107,28 +81,25 @@ python magentic_example.py
 | **ConcurrentBuilder** | 11 | Parallel multi-agent processing |
 | **MagenticBuilder** | 11 | Manager-orchestrated agent teams |
 
-### Python Script (`magentic_example.py`)
-
-| Feature | Description |
-|---------|-------------|
-| **MagenticBuilder** | Dynamic team coordination with manager agent |
-| **Specialized Agents** | Role-based agents with distinct personalities |
-| **Streaming Events** | Real-time agent updates via `AgentRunUpdateEvent` |
-| **Progress Tracking** | `MagenticProgressLedger` for workflow state |
-| **Plan Review** | Human-in-the-loop approval with `MagenticPlanReviewRequest` |
-| **Discussion Logging** | Custom middleware for Markdown conversation logs |
-| **Agent Middleware** | Custom logging hooks for observability |
-| **Azure Authentication** | Both API key and Azure CLI auth support |
-
 ## 📁 Project Structure
 
 ```
 agent-framework/
 ├── agent_framework.ipynb      # Interactive tutorial notebook (12 sections)
-├── magentic_example.py        # Standalone Magentic orchestration demo
 ├── requirements.txt           # Python dependencies
+├── .env.example               # Example environment configuration
 ├── .env                       # Azure OpenAI configuration (create this)
 ├── .venv/                     # Python virtual environment
+├── .github/                   # GitHub workflows and agents
+│   ├── agents/                # Custom GitHub agent definitions
+│   └── workflows/             # CI/CD workflows (notebook-sync, readme-updater)
+├── docs/                      # HTML documentation pages
+│   ├── index.html
+│   ├── supportpilot.html
+│   ├── businessbrain.html
+│   ├── devopsagent.html
+│   ├── docmind.html
+│   └── warroom.html
 ├── images/                    # Architecture and workflow diagrams
 │   ├── agent-components.png
 │   ├── concurrent-workflow.png
@@ -137,7 +108,6 @@ agent-framework/
 │   ├── sequential-workflow.png
 │   ├── threads-and-memory.png
 │   └── workflow-example.png
-├── discussions/               # Created by magentic_example.py at runtime (Markdown logs)
 └── README.md                  # This file
 ```
 
