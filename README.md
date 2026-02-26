@@ -1,6 +1,6 @@
 # 📧 Microsoft Agent Framework — Learning Examples
 
-A comprehensive collection of learning resources for building AI-powered systems using the **Microsoft Agent Framework**. This repository includes both an interactive Jupyter notebook tutorial and standalone Python examples demonstrating advanced orchestration patterns.
+A comprehensive collection of learning resources for building AI-powered systems using the **Microsoft Agent Framework**. This repository includes both an interactive Jupyter notebook tutorial and a hands-on security workshop demonstrating advanced orchestration patterns.
 
 ## 🎯 What's Included
 
@@ -18,16 +18,16 @@ An interactive tutorial that progressively teaches framework capabilities:
 - ✅ **Uses multiple reviewers** for quality control (security, tone, accuracy)
 - ✅ **Logs** every operation for observability
 
-### 2. **Startup Idea Analyzer** (Standalone Python Script)
-A Magentic orchestration demo featuring collaborative AI agents:
+### 2. **Security Scanning Workshop** (Hands-on Challenges)
+A practical workshop building multi-agent security scanners:
 
-- 🔍 **Market Researcher** - Pessimistic analyst focused on risks
-- 💰 **Financial Analyst** - Optimistic view on revenue potential
-- ⚙️ **Tech Advisor** - Skeptical technical feasibility assessor
-- 🎯 **Magentic Manager** - Coordinates the team and balances perspectives
-- 📄 **Live Logging** - Real-time Markdown discussion logs
-- ⚡ **Streaming Output** - See agent discussions as they happen
-- 🔄 **Human-in-the-Loop** - Optional plan review and approval
+- 🔍 **10 Progressive Challenges** - From setup to full orchestration
+- 🛡️ **Specialized Scanner Agents** - Secrets, code vulnerabilities, infrastructure, auth/crypto
+- 🔗 **MCP Integration** - Connect agents to GitHub repositories via Model Context Protocol
+- 🧠 **Shared Memory** - Cross-agent coordination with context providers
+- 📊 **Structured Output** - Pydantic models for consistent security findings
+- 🎯 **Workflow Orchestration** - Coordinate multiple agents into a unified scanning workflow
+- 🏆 **VULN-HUNT Competition** - Test your scanner against a live leaderboard
 
 ## 🚀 Quick Start
 
@@ -35,11 +35,12 @@ A Magentic orchestration demo featuring collaborative AI agents:
 
 1. ✅ **Azure subscription** with access to Azure OpenAI
 2. ✅ **Azure OpenAI resource** with a deployed model (e.g., `gpt-4o-mini`)
-3. ✅ **Azure CLI** installed and authenticated (`az login`)
-4. ✅ **Python 3.10+**
-5. ✅ **Azure AI Foundry project** *(Section 7 — MCP Integration only)*
-   - **Project endpoint** — found in your project's **Overview** page
-   - **Model deployment name** — found in your project's **Models + endpoints** page
+3. ✅ **Python 3.10+**
+4. ✅ **Azure CLI** installed and authenticated (`az login`) *(optional authentication method)*
+
+**For Security Workshop:**
+- ✅ **GitHub Personal Access Token** with `repo` scope
+- ✅ **Azure AI Agent Service** access via Service Principal
 
 ### Setup
 
@@ -54,14 +55,12 @@ source .venv/bin/activate  # macOS/Linux
 # or .venv\Scripts\activate  # Windows
 
 # 3. Install dependencies
-pip install -r requirements.txt
+pip install -r requirements.txt --pre
 
 # 4. Configure environment
-# Create a .env file with your Azure OpenAI configuration:
-AZURE_OPENAI_ENDPOINT=https://your-apim-gateway.azure-api.net  # APIM gateway URL
-AZURE_OPENAI_CHAT_DEPLOYMENT_NAME=gpt-4o-mini
-AZURE_OPENAI_API_KEY=your-apim-subscription-key  # APIM subscription key
-API_VERSION=2025-01-01-preview  # Optional, defaults to this value
+# Copy the example file and fill in your credentials:
+cp .env.example .env
+# Edit .env with your Azure OpenAI configuration
 
 # 5. Login to Azure (for CLI-based authentication)
 az login
@@ -76,16 +75,17 @@ jupyter notebook agent_framework.ipynb
 # Or open in VS Code with Jupyter extension
 ```
 
-**Option 2: Standalone Magentic Demo**
+**Option 2: Security Workshop**
 ```bash
-# Run the startup analyzer
-python magentic_example.py
+# Navigate to workshop directory
+cd workshop
 
-# Follow the interactive prompts to:
-# - Choose streaming or human-in-the-loop mode
-# - Select a pre-defined startup idea or enter your own
-# - Watch agents collaborate in real-time
-# - Review the generated discussion log in discussions/ folder
+# Start with Challenge 0 for environment setup
+# Then progress through challenges 1-10
+cd challenge-1
+python challenge_01_repo_access.py
+
+# See workshop/README.md for full details
 ```
 
 ## 🏗️ Framework Features Demonstrated
@@ -107,46 +107,79 @@ python magentic_example.py
 | **ConcurrentBuilder** | 11 | Parallel multi-agent processing |
 | **MagenticBuilder** | 11 | Manager-orchestrated agent teams |
 
-### Python Script (`magentic_example.py`)
+### Security Workshop (`workshop/`)
 
-| Feature | Description |
-|---------|-------------|
-| **MagenticBuilder** | Dynamic team coordination with manager agent |
-| **Specialized Agents** | Role-based agents with distinct personalities |
-| **Streaming Events** | Real-time agent updates via `AgentRunUpdateEvent` |
-| **Progress Tracking** | `MagenticProgressLedger` for workflow state |
-| **Plan Review** | Human-in-the-loop approval with `MagenticPlanReviewRequest` |
-| **Discussion Logging** | Custom middleware for Markdown conversation logs |
-| **Agent Middleware** | Custom logging hooks for observability |
-| **Azure Authentication** | Both API key and Azure CLI auth support |
+| Feature | Challenges | Description |
+|---------|-----------|-------------|
+| **Model Context Protocol** | 1 | GitHub integration via MCP servers |
+| **Custom Tools** | 2 | Reusable `@tool` functions for file operations |
+| **Shared Memory** | 3 | BaseContextProvider for cross-agent state |
+| **Middleware Chains** | 4 | Logging and observability hooks |
+| **Specialized Agents** | 5-9 | Role-based security scanners |
+| **Structured Output** | 6 | Pydantic models with `response_format` |
+| **Workflow Orchestration** | 10 | Sequential coordination of multiple agents |
+| **Real-world Integration** | All | GitHub API, Azure OpenAI, Azure AI Agent Service |
 
 ## 📁 Project Structure
 
 ```
 agent-framework/
 ├── agent_framework.ipynb      # Interactive tutorial notebook (12 sections)
-├── magentic_example.py        # Standalone Magentic orchestration demo
 ├── requirements.txt           # Python dependencies
-├── .env                       # Azure OpenAI configuration (create this)
-├── .venv/                     # Python virtual environment
+├── .env.example               # Azure OpenAI configuration template
+├── .gitignore                 # Git ignore patterns
+├── README.md                  # This file
+│
+├── docs/                      # HTML documentation for agent examples
+│   ├── index.html            # Main documentation index
+│   ├── businessbrain.html    # Business analysis agent
+│   ├── devopsagent.html      # DevOps automation agent
+│   ├── docmind.html          # Documentation agent
+│   ├── supportpilot.html     # Support automation agent
+│   └── warroom.html          # Incident management agent
+│
 ├── images/                    # Architecture and workflow diagrams
 │   ├── agent-components.png
 │   ├── concurrent-workflow.png
 │   ├── group-chat.png
+│   ├── handoff-workflow.png
 │   ├── magentic-workflow.png
 │   ├── sequential-workflow.png
 │   ├── threads-and-memory.png
 │   └── workflow-example.png
-├── discussions/               # Created by magentic_example.py at runtime (Markdown logs)
-└── README.md                  # This file
+│
+├── workshop/                  # Security scanning workshop
+│   ├── README.md             # Workshop guide and challenge overview
+│   ├── SECURITY_GUIDE.md     # Vulnerability knowledge base
+│   ├── .env.sample           # Workshop-specific environment variables
+│   ├── shared_models.py      # Pydantic models and client factories
+│   ├── expected_workflow_output.json  # Target JSON structure
+│   ├── _paths.py             # Path utilities
+│   ├── challenge-0/          # Environment setup
+│   ├── challenge-1/          # MCP repository access
+│   ├── challenge-2/          # File reading tools
+│   ├── challenge-3/          # Scan memory
+│   ├── challenge-4/          # Observability middleware
+│   ├── challenge-5/          # Secrets scanner
+│   ├── challenge-6/          # Structured output
+│   ├── challenge-7/          # Code vulnerability scanner
+│   ├── challenge-8/          # Infrastructure scanner
+│   ├── challenge-9/          # Auth and crypto scanner
+│   └── challenge-10/         # Orchestrated workflow
+│
+└── .github/                   # GitHub Actions workflows and agents
+    ├── workflows/            # CI/CD automation
+    └── agents/               # Custom agent definitions
 ```
 
 ## 📝 Environment Variables
 
+### For Jupyter Notebook
+
 Create a `.env` file in the project root with the following variables:
 
 ```bash
-# Required: Azure OpenAI Configuration (Sections 1–16)
+# Required: Azure OpenAI Configuration
 AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com/
 AZURE_OPENAI_CHAT_DEPLOYMENT_NAME=gpt-4o-mini
 
@@ -163,13 +196,31 @@ AZURE_AI_PROJECT_ENDPOINT=https://<resource>.services.ai.azure.com/api/projects/
 AZURE_AI_MODEL_DEPLOYMENT_NAME=gpt-4o-mini
 ```
 
+### For Security Workshop
+
+See `workshop/.env.sample` for additional variables required for the workshop:
+
+```bash
+# Workshop-specific variables (in addition to above)
+GITHUB_PERSONAL_ACCESS_TOKEN=ghp_xxxxx
+SERVICE_PRINCIPAL_CLIENT_ID=xxxxx
+SERVICE_PRINCIPAL_CLIENT_SECRET=xxxxx
+SERVICE_PRINCIPAL_TENANT_ID=xxxxx
+AZURE_AI_PROJECT_CONNECTION_STRING=xxxxx
+TARGET_REPO_OWNER=owner
+TARGET_REPO_NAME=repo
+```
+
 **Authentication Options:**
 1. **Azure CLI** (recommended): Run `az login` before starting
 2. **API Key**: Set `AZURE_OPENAI_API_KEY` in `.env`
+3. **Service Principal**: Required for Azure AI Agent Service (workshop)
 
-## 📚 Jupyter Notebook Contents
+## 📚 Learning Path
 
-The `agent_framework.ipynb` tutorial is organized into 12 progressive sections:
+### Jupyter Notebook Tutorial (`agent_framework.ipynb`)
+
+The notebook is organized into 12 progressive sections:
 
 | # | Section | What You'll Learn |
 |---|---------|------------------|
@@ -186,6 +237,26 @@ The `agent_framework.ipynb` tutorial is organized into 12 progressive sections:
 | **10** | Fan-Out/Fan-In | Parallel processing |
 | **11** | Multi-Agent Group Chat | Team collaboration |
 | **12** | Capstone Demo | End-to-end system |
+
+### Security Workshop (`workshop/`)
+
+Hands-on challenges building a complete security scanning system:
+
+| Challenge | Title | Duration | Key Concepts |
+|-----------|-------|----------|--------------|
+| **0** | Environment Setup | 20 min | Azure, GitHub, credentials |
+| **1** | MCP Repository Access | 15 min | Model Context Protocol, GitHub |
+| **2** | File Reading Tools | 15 min | Custom `@tool` functions |
+| **3** | Scan Memory | 20 min | BaseContextProvider, shared state |
+| **4** | Observability Middleware | 15 min | Logging, debugging |
+| **5** | Secrets Scanner | 20 min | Pattern detection, security |
+| **6** | Structured Output | 15 min | Pydantic, `response_format` |
+| **7** | Code Vulnerability Scanner | 20 min | Code analysis, OWASP |
+| **8** | Infrastructure Scanner | 20 min | Docker, Terraform, CI/CD |
+| **9** | Auth and Crypto Scanner | 20 min | Authentication, cryptography |
+| **10** | Orchestrated Workflow | 30 min | Full pipeline, scoring |
+
+**Bonus:** VULN-HUNT live competition to test your scanner against others!
 
 ## 📖 Learn More
 
