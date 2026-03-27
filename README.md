@@ -6,17 +6,19 @@ A comprehensive collection of learning resources for building AI-powered systems
 
 This repository contains two main learning resources:
 
-### 1. **Support Email Copilot** (Jupyter Notebook)
-An interactive tutorial that progressively teaches framework capabilities:
+### 1. **InboxOps Support Copilot** (Jupyter Notebook)
+A comprehensive 16-section tutorial covering the full framework:
 
-- ✅ **Classifies** incoming emails (Spam / Not Spam / Uncertain)
-- ✅ **Looks up** customer SLA and ticket status via function tools
-- ✅ **Drafts** professional responses with customizable tone
-- ✅ **Requires approval** before sending sensitive replies
-- ✅ **Remembers** user preferences (language, tone, name)
-- ✅ **Processes in parallel** for long emails (response + summary)
-- ✅ **Uses multiple reviewers** for quality control (security, tone, accuracy)
-- ✅ **Logs** every operation for observability
+- ✅ **Single agents** with streaming and thread-based memory
+- ✅ **Function tools** for API integration (`@tool` decorator)
+- ✅ **Multimodal input** accepting images and attachments
+- ✅ **Structured output** returning Pydantic models
+- ✅ **MCP integration** connecting to external systems
+- ✅ **Human-in-the-loop** approval gates for sensitive actions
+- ✅ **Middleware** for logging and observability
+- ✅ **Error handling** with retry and circuit breakers
+- ✅ **Memory** with persistent context providers
+- ✅ **Multi-agent workflows** (Sequential, Concurrent, Group Chat, Magentic, Handoff)
 
 ### 2. **Startup Idea Analyzer** (Standalone Python Script)
 A Magentic orchestration demo featuring collaborative AI agents:
@@ -96,16 +98,18 @@ python magentic_example.py
 |---------|---------|-------------|
 | **ChatAgent** | 1-3 | Core agent with instructions, streaming, threads |
 | **Function Tools** | 4 | `@tool` decorator for custom capabilities |
-| **Approval Mode** | 5 | `approval_mode="always_require"` for HITL |
-| **Middleware** | 6 | Agent and function invocation hooks |
-| **ContextProvider** | 7 | Memory with `invoking`/`invoked` lifecycle |
-| **WorkflowBuilder** | 8-10 | Sequential, branching, fan-out patterns |
-| **AgentExecutor** | 8-10 | Wrap agents for workflow orchestration |
-| **Switch-Case** | 9 | Multi-way routing with `Case`/`Default` |
-| **Multi-Selection** | 10 | Dynamic fan-out to parallel paths |
-| **Fan-In** | 10 | Aggregate results from parallel execution |
-| **ConcurrentBuilder** | 11 | Parallel multi-agent processing |
-| **MagenticBuilder** | 11 | Manager-orchestrated agent teams |
+| **Multimodal Input** | 5 | Image and file attachment support |
+| **Structured Output** | 6 | Pydantic model responses |
+| **MCP Integration** | 7 | Model Context Protocol server connections |
+| **Approval Mode** | 8 | `approval_mode="always_require"` for HITL |
+| **Middleware** | 9 | Agent and function invocation hooks |
+| **Error Handling** | 10 | Retry logic and circuit breaker patterns |
+| **ContextProvider** | 11 | Memory with `invoking`/`invoked` lifecycle |
+| **Sequential Workflow** | 12 | Fixed pipeline execution patterns |
+| **Concurrent Workflow** | 13 | Fan-out/fan-in parallel processing |
+| **Group Chat** | 14 | Round-robin and orchestrated discussions |
+| **MagenticBuilder** | 15 | Dynamic manager-orchestrated teams |
+| **Handoff Pattern** | 16 | Peer-to-peer agent routing |
 
 ### Python Script (`magentic_example.py`)
 
@@ -169,23 +173,27 @@ AZURE_AI_MODEL_DEPLOYMENT_NAME=gpt-4o-mini
 
 ## 📚 Jupyter Notebook Contents
 
-The `agent_framework.ipynb` tutorial is organized into 12 progressive sections:
+The `agent_framework.ipynb` tutorial is organized into 16 progressive sections:
 
 | # | Section | What You'll Learn |
 |---|---------|------------------|
-| **0** | Shared Setup | Environment, models, sample data |
-| **1** | Basic Agent | Create and run your first agent |
-| **2** | Streaming | Real-time token streaming |
-| **3** | Multi-Turn Conversations | Thread-based memory |
-| **4** | Function Tools | Add custom capabilities |
-| **5** | Human-in-the-Loop | Approval workflows |
-| **6** | Middleware | Logging & observability |
-| **7** | Memory | Persistent user context |
-| **8** | Sequential Workflows | Classify → Draft → Review |
-| **9** | Branching Logic | Spam vs. NotSpam vs. Uncertain |
-| **10** | Fan-Out/Fan-In | Parallel processing |
-| **11** | Multi-Agent Group Chat | Team collaboration |
-| **12** | Capstone Demo | End-to-end system |
+| **0** | Environment Setup | Azure OpenAI setup, models, sample data |
+| **1** | Single Agent | Create and run your first agent |
+| **2** | Streaming Responses | Real-time token streaming |
+| **3** | Threads | Thread-based conversation history |
+| **4** | Tools | Add custom function capabilities with `@tool` |
+| **5** | Multimodal Input | Accept images and attachments |
+| **6** | Structured Output | Return Pydantic models instead of text |
+| **7** | MCP Integration | Connect to external systems via MCP servers |
+| **8** | Human-in-the-Loop | Approval gates before risky actions |
+| **9** | Middleware & Observability | Logging, timing, and hooks |
+| **10** | Error Handling & Retry | Exponential backoff and circuit breakers |
+| **11** | Memory | Persistent context with `ContextProvider` |
+| **12** | Sequential Workflow | Fixed pipeline (classify → draft → review) |
+| **13** | Concurrent Workflow | Fan-out / fan-in with parallel agents |
+| **14** | Group Chat | Round-robin and orchestrator-led discussions |
+| **15** | Magentic Orchestration | Dynamic planning with HITL approval |
+| **16** | Handoff Orchestration | Peer-to-peer agent routing |
 
 ## 📖 Learn More
 
