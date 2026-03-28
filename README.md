@@ -129,6 +129,14 @@ agent-framework/
 ├── requirements.txt           # Python dependencies
 ├── .env                       # Azure OpenAI configuration (create this)
 ├── .venv/                     # Python virtual environment
+├── .github/                   # GitHub workflows and agents
+│   ├── workflows/
+│   │   ├── notebook-sync.md         # Daily sync with official Agent Framework docs
+│   │   ├── notebook-sync.lock.yml
+│   │   ├── readme-updater.md        # Auto-update README on changes
+│   │   └── readme-updater.lock.yml
+│   └── agents/
+│       └── readme-updater.agent.md  # Custom agent configuration
 ├── images/                    # Architecture and workflow diagrams
 │   ├── agent-components.png
 │   ├── concurrent-workflow.png
@@ -186,6 +194,22 @@ The `agent_framework.ipynb` tutorial is organized into 12 progressive sections:
 | **10** | Fan-Out/Fan-In | Parallel processing |
 | **11** | Multi-Agent Group Chat | Team collaboration |
 | **12** | Capstone Demo | End-to-end system |
+
+## 🤖 Automated Workflows
+
+This repository includes GitHub workflows to keep documentation up-to-date:
+
+### README Updater
+- **Trigger**: Automatically runs on every push to `main`
+- **Purpose**: Detects changes in the repository and updates README.md accordingly
+- **What it checks**: New features, file structure changes, configuration updates, API changes
+- **Output**: Creates a pull request with README updates if changes are detected
+
+### Notebook Sync
+- **Trigger**: Daily at 8:30 AM UTC (or manual via workflow_dispatch)
+- **Purpose**: Syncs `agent_framework.ipynb` with the latest official Microsoft Agent Framework documentation
+- **What it does**: Fetches official docs, identifies gaps, and integrates new content into the InboxOps narrative
+- **Output**: Creates a pull request with notebook updates if new features are documented
 
 ## 📖 Learn More
 
