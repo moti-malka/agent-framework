@@ -4,9 +4,16 @@ A comprehensive collection of learning resources for building AI-powered systems
 
 ## 🎯 What's Included
 
-This repository contains two main learning resources:
+This repository contains learning resources and interactive demos:
 
-### 1. **Support Email Copilot** (Jupyter Notebook)
+### 1. **Interactive UI Demos** (Browser-Based)
+Three standalone HTML applications demonstrating real-world agent scenarios:
+
+- 🎯 **WarRoom** (`docs/warroom.html`) - Multi-agent decision system for collaborative business decisions with specialized agents (Sales, Risk, Operations, Strategy)
+- 💬 **SupportPilot** (`docs/supportpilot.html`) - AI-powered customer support agent with ticket classification and response drafting
+- 🏠 **Index Page** (`docs/index.html`) - Main landing page showcasing the framework demos
+
+### 2. **Support Email Copilot** (Jupyter Notebook)
 An interactive tutorial that progressively teaches framework capabilities:
 
 - ✅ **Classifies** incoming emails (Spam / Not Spam / Uncertain)
@@ -18,7 +25,7 @@ An interactive tutorial that progressively teaches framework capabilities:
 - ✅ **Uses multiple reviewers** for quality control (security, tone, accuracy)
 - ✅ **Logs** every operation for observability
 
-### 2. **Startup Idea Analyzer** (Standalone Python Script)
+### 3. **Startup Idea Analyzer** (Standalone Python Script)
 A Magentic orchestration demo featuring collaborative AI agents:
 
 - 🔍 **Market Researcher** - Pessimistic analyst focused on risks
@@ -69,14 +76,25 @@ az login
 
 ### Running the Examples
 
-**Option 1: Jupyter Notebook Tutorial**
+**Option 1: Interactive UI Demos (No Setup Required)**
+```bash
+# Open any demo directly in your browser
+open docs/index.html          # Main landing page
+open docs/warroom.html        # Multi-agent decision system
+open docs/supportpilot.html   # Customer support agent
+
+# Or double-click the HTML files in your file explorer
+# These are standalone client-side apps - no server needed
+```
+
+**Option 2: Jupyter Notebook Tutorial**
 ```bash
 # Open the notebook
 jupyter notebook agent_framework.ipynb
 # Or open in VS Code with Jupyter extension
 ```
 
-**Option 2: Standalone Magentic Demo**
+**Option 3: Standalone Magentic Demo**
 ```bash
 # Run the startup analyzer
 python magentic_example.py
@@ -124,6 +142,10 @@ python magentic_example.py
 
 ```
 agent-framework/
+├── docs/                      # Interactive HTML demos (no backend needed)
+│   ├── index.html            # Main landing page
+│   ├── warroom.html          # Multi-agent decision system UI
+│   └── supportpilot.html     # Customer support agent UI
 ├── agent_framework.ipynb      # Interactive tutorial notebook (12 sections)
 ├── magentic_example.py        # Standalone Magentic orchestration demo
 ├── requirements.txt           # Python dependencies
@@ -138,6 +160,9 @@ agent-framework/
 │   ├── threads-and-memory.png
 │   └── workflow-example.png
 ├── discussions/               # Created by magentic_example.py at runtime (Markdown logs)
+├── .github/                   # GitHub Actions workflows
+│   ├── workflows/            # Automation workflows
+│   └── agents/               # Custom agent definitions
 └── README.md                  # This file
 ```
 
