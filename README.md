@@ -55,6 +55,7 @@ source .venv/bin/activate  # macOS/Linux
 
 # 3. Install dependencies
 pip install -r requirements.txt
+# Note: agent-framework is installed with --pre flag for latest features
 
 # 4. Configure environment
 # Create a .env file with your Azure OpenAI configuration:
@@ -129,13 +130,24 @@ agent-framework/
 ├── requirements.txt           # Python dependencies
 ├── .env                       # Azure OpenAI configuration (create this)
 ├── .venv/                     # Python virtual environment
+├── .github/                   # GitHub Actions workflows and agents
+│   ├── workflows/             # Automated workflows
+│   │   ├── notebook-sync.lock.yml      # Notebook synchronization workflow
+│   │   ├── notebook-sync.md            # Notebook sync documentation
+│   │   ├── readme-updater.lock.yml     # README updater workflow
+│   │   └── readme-updater.md           # README updater documentation
+│   └── agents/                # Custom agent definitions
+│       └── readme-updater.agent.md     # README updater agent config
 ├── images/                    # Architecture and workflow diagrams
 │   ├── agent-components.png
 │   ├── concurrent-workflow.png
 │   ├── group-chat.png
+│   ├── maf.png
 │   ├── magentic-workflow.png
+│   ├── main.png
 │   ├── sequential-workflow.png
 │   ├── threads-and-memory.png
+│   ├── what-is-agent.png
 │   └── workflow-example.png
 ├── discussions/               # Created by magentic_example.py at runtime (Markdown logs)
 └── README.md                  # This file
@@ -186,6 +198,22 @@ The `agent_framework.ipynb` tutorial is organized into 12 progressive sections:
 | **10** | Fan-Out/Fan-In | Parallel processing |
 | **11** | Multi-Agent Group Chat | Team collaboration |
 | **12** | Capstone Demo | End-to-end system |
+
+## 🤖 Automated Workflows
+
+This repository uses GitHub Actions workflows to maintain code quality:
+
+### README Updater
+- **Trigger**: On every push to `main`
+- **Purpose**: Automatically detects changes and updates README.md to stay in sync
+- **Config**: `.github/workflows/readme-updater.lock.yml` and `.github/agents/readme-updater.agent.md`
+
+### Notebook Sync
+- **Trigger**: On changes to `agent_framework.ipynb`
+- **Purpose**: Ensures notebook cells have unique IDs and maintains organization
+- **Config**: `.github/workflows/notebook-sync.lock.yml`
+
+These workflows help keep documentation accurate and notebooks well-organized.
 
 ## 📖 Learn More
 
